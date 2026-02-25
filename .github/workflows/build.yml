@@ -6,7 +6,7 @@ on:
       release:
         description: 'Create pre-release'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
           cache: 'yarn'
       
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       
       - name: Build Chrome extension
         run: yarn build
@@ -64,10 +64,12 @@ jobs:
           name: Build ${{ github.run_number }}
           draft: false
           prerelease: true
-          files: "chrome-extension.zip,firefox-extension.zip"
+          files:
+            - chrome-extension.zip
+            - firefox-extension.zip
           body: |
             ## Automated Build ${{ github.run_number }}
             
             - Build targets: Chrome, Firefox
-            - Build date: ${{ github.event.head_commit.timestamp }}
+            - Build date: ${{ github.event.timestamp }}
             - Commit: ${{ github.sha }}
