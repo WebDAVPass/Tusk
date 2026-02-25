@@ -1,7 +1,7 @@
 <script>
 /* beautify preserve:start */
 import { Links } from '$services/links.js';
-import Spinner from 'vue-simple-spinner';
+import Spinner from '@/components/Spinner.vue';
 /* beautify preserve:end */
 export default {
   components: {

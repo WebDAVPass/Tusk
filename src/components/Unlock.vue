@@ -3,7 +3,7 @@ import { parseUrl, getValidTokens } from '@/lib/utils.js';
 
 import InfoCluster from '@/components/InfoCluster.vue';
 import EntryList from '@/components/EntryList.vue';
-import Spinner from 'vue-simple-spinner';
+import Spinner from '@/components/Spinner.vue';
 import Messenger from '@/components/Messenger.vue';
 import { defineComponent } from 'vue';
 
