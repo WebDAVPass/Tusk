@@ -338,7 +338,7 @@ export default defineComponent({
 <template>
   <div>
     <!-- Busy Spinner -->
-    <div v-if="busy" class="spinner">
+    <div v-if="busy" class="unlock-spinner">
       <spinner size="medium" :message="$t('unlock.unlocking', { name: databaseFileName })" />
     </div>
 
@@ -356,7 +356,7 @@ export default defineComponent({
     <!-- Unlock input group -->
     <div v-if="!busy && !isUnlocked" id="masterPasswordGroup">
       <div class="unlockLogo stack-item">
-        <img src="/assets/icons/exported/128x128.svg" width="48px" height="48px" />
+        <img src="/assets/icons/exported/128x128.svg" width="48" height="48" />
         <span>{{ $t('unlock.title') }}</span>
       </div>
 
@@ -594,7 +594,7 @@ export default defineComponent({
   }
 }
 
-.spinner {
+.unlock-spinner {
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -675,7 +675,7 @@ export default defineComponent({
     height: 48px;
     vertical-align: middle;
     margin-right: 10px;
-    filter: drop-shadow(var(--shadow-md));
+    filter: drop-shadow(var(--drop-shadow-md));
   }
 }
 </style>

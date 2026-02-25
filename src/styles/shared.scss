@@ -1,7 +1,7 @@
 /**
  * 主题变量必须在最前面导入，以确保 CSS 变量最先定义
  */
-@import './theme-variables.scss';
+@import './theme-variables';
 
 @import '@materialize/components/theme.module.scss';
 @import '@materialize/components/tokens.module.scss';
@@ -15,8 +15,8 @@
 @import '@materialize/components/_typography.scss';
 @import '@materialize/components/_preloader.scss';
 
-@import './settings.scss';
-@import './modern-theme.scss';
+@import './settings';
+@import './modern-theme';
 
 .selectable {
   transition: all $transition-base;
@@ -45,7 +45,7 @@
 // 现代化错误提示样式
 .error {
   border-left: 4px solid $error-color;
-  background: rgba($error-color, 0.05);
+  background: rgba(var(--error-rgb), 0.05);
   border-radius: 0 $radius-sm $radius-sm 0;
 
   &.pill {
@@ -151,7 +151,7 @@
     height: 56px;
     vertical-align: middle;
     margin-right: $space-3;
-    filter: drop-shadow($shadow-md);
+    filter: drop-shadow($drop-shadow-md);
   }
 }
 
@@ -210,7 +210,7 @@
         left: 2px;
         width: 20px;
         height: 20px;
-        background: white;
+        background: var(--switch-thumb);
         border-radius: $radius-full;
         transition: transform $transition-bounce;
         box-shadow: $shadow-sm;
@@ -268,7 +268,7 @@
 
 // 卡片容器样式
 .modern-container {
-  background: white;
+  background: var(--card-bg);
   border-radius: $radius-lg;
   box-shadow: $shadow-md;
   padding: $space-5;

@@ -51,6 +51,11 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-glow: 0 0 20px rgba(0, 137, 236, 0.3);
   
+  // drop-shadow 专用（单层阴影，用于 filter: drop-shadow()）
+  --drop-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --drop-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --drop-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+  
   // 开关特定颜色
   --switch-bg-off: #e9ecef;
   --switch-bg-on: linear-gradient(135deg, #0089ec 0%, #4dabf5 100%);
@@ -117,6 +122,11 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
   --shadow-glow: 0 0 20px rgba(77, 171, 245, 0.4);
   
+  // drop-shadow 专用（单层阴影，用于 filter: drop-shadow()）
+  --drop-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --drop-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --drop-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+  
   // 开关特定颜色
   --switch-bg-off: #5f6368;
   --switch-bg-on: linear-gradient(135deg, #4dabf5 0%, #6fc5ff 100%);
@@ -175,6 +185,11 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
     --shadow-glow: 0 0 20px rgba(77, 171, 245, 0.4);
     
+    // drop-shadow 专用
+    --drop-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --drop-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --drop-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    
     --switch-bg-off: #5f6368;
     --switch-bg-on: linear-gradient(135deg, #4dabf5 0%, #6fc5ff 100%);
     --switch-thumb: #e8eaed;
@@ -223,6 +238,10 @@ $shadow-sm: var(--shadow-sm);
 $shadow-md: var(--shadow-md);
 $shadow-lg: var(--shadow-lg);
 $shadow-glow: var(--shadow-glow);
+
+$drop-shadow-sm: var(--drop-shadow-sm);
+$drop-shadow-md: var(--drop-shadow-md);
+$drop-shadow-lg: var(--drop-shadow-lg);
 
 // ============================================
 // 圆角和间距（主题无关）

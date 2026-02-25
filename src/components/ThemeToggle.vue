@@ -34,13 +34,15 @@ export default {
     },
   },
   async mounted() {
+    // 确保主题管理器初始化
+    await themeManager.init();
+    
     // 从设置中加载主题
     if (this.settings) {
       const savedTheme = await this.settings.getSetTheme();
       this.currentTheme = savedTheme;
       themeManager.applyTheme(savedTheme);
     } else {
-      await themeManager.init();
       this.currentTheme = themeManager.getCurrentTheme();
     }
 
@@ -181,7 +183,7 @@ export default {
 
     &:hover {
       color: $text-primary;
-      background: rgba($primary-color, 0.05);
+      background: rgba(var(--primary-rgb), 0.05);
     }
 
     &.active {
