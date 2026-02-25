@@ -64,7 +64,7 @@ function KeyFileParser() {
       name: 'SHA-256',
     };
 
-    return window.crypto.subtle.digest(SHA, arr);
+    return crypto.subtle.digest(SHA, arr);
   };
 
   return exports;

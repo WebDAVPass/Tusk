@@ -133,6 +133,12 @@ export default defineComponent({
                   this.unlock(usage.passwordKey);
               }
             }
+          })
+          .catch((err) => {
+            console.error('Auto-unlock error:', err);
+          })
+          .finally(() => {
+            this.busy = false;
           });
       };
 
