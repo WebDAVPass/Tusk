@@ -3,6 +3,9 @@
  * 管理自动/手动深浅色主题切换
  */
 
+import { ChromePromiseApi } from './chrome-api-promise.js';
+
+const chromePromise = ChromePromiseApi();
 const THEME_KEY = 'themePreference';
 const THEME_AUTO = 'auto';
 const THEME_LIGHT = 'light';
@@ -35,7 +38,7 @@ class ThemeManager {
    */
   async getSavedTheme() {
     try {
-      const result = await chrome.storage.local.get([THEME_KEY]);
+      const result = await chromePromise.storage.local.get(THEME_KEY);
       return result[THEME_KEY] || THEME_AUTO;
     } catch (e) {
       console.warn('Failed to get theme preference:', e);
@@ -48,7 +51,7 @@ class ThemeManager {
    */
   async saveTheme(theme) {
     try {
-      await chrome.storage.local.set({ [THEME_KEY]: theme });
+      await chromePromise.storage.local.set({ [THEME_KEY]: theme });
     } catch (e) {
       console.warn('Failed to save theme preference:', e);
     }
