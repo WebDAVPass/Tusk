@@ -45,7 +45,19 @@ export default defineComponent({
       databaseFileName: '',
       keyFilePicker: false,
       appVersion: chrome.runtime.getManifest().version,
-      slider_options: [
+      slider_int: 0,
+    };
+  },
+  computed: {
+    rememberPassword: function () {
+      return this.rememberPeriod !== 0;
+    },
+    selectedKeyFileName: function () {
+      if (this.selectedKeyFile !== undefined) return this.selectedKeyFile.name;
+      return this.$t('unlock.noKeyfileSelected');
+    },
+    slider_options: function () {
+      return [
         {
           time: 0,
           text: this.$t('unlock.rememberPeriod.doNotRemember'),
@@ -74,17 +86,7 @@ export default defineComponent({
           time: -1,
           text: this.$t('unlock.rememberPeriod.untilExit'),
         },
-      ],
-      slider_int: 0,
-    };
-  },
-  computed: {
-    rememberPassword: function () {
-      return this.rememberPeriod !== 0;
-    },
-    selectedKeyFileName: function () {
-      if (this.selectedKeyFile !== undefined) return this.selectedKeyFile.name;
-      return this.$t('unlock.noKeyfileSelected');
+      ];
     },
   },
   watch: {
