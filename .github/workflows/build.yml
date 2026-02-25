@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
+          corepack: true
       
       - name: Install dependencies
         run: yarn install --frozen-lockfile
