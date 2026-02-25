@@ -12,6 +12,7 @@ export default {
   components: {
     GenericProviderUi,
   },
+  emits: ['login', 'logout'],
   props: {
     providerManager: Object,
     settings: Object,
@@ -45,13 +46,12 @@ export default {
     addServer() {
       chromePromise.permissions
         .request({
-          origins: [this.webdav.url], //FLAGHERE TODO
+          origins: [this.webdav.url],
         })
         .then(() => {
           this.providerManager
             .addServer(this.webdav.url, this.webdav.username, this.webdav.password)
             .then((serverInfo) => {
-              // do somethings
               return this.updateServerList().then(() => {
                 this.scan(serverInfo.serverId);
               });
@@ -85,7 +85,6 @@ export default {
           this.messages.error = err.toString();
         })
         .then(() => {
-          // READ: finally.
           this.setBusy(serverId, false);
         });
     },
@@ -109,6 +108,7 @@ export default {
           .logout()
           .then(() => {
             this.loggedIn = false;
+            this.$emit('logout');
           })
           .catch((err) => {
             console.error('WebDAV 登出失败:', err);
@@ -119,6 +119,7 @@ export default {
           .login()
           .then(() => {
             this.loggedIn = true;
+            this.$emit('login');
             this.onLogin();
           })
           .catch((err) => {
@@ -129,7 +130,6 @@ export default {
       }
     },
     onLogin() {
-      /* Other things to do when a successful login happens... */
       this.providerManager.listDatabases().then((databases) => {
         this.databases = databases;
       });
@@ -226,7 +226,10 @@ export default {
 @import '../styles/settings.scss';
 
 .webdav-provider-wrapper {
-  margin-bottom: 16px;
+  margin-bottom: 0;
+  height: fit-content;
+  display: inline-block;
+  width: 100%;
 }
 
 .webdav-config-section {
@@ -246,25 +249,48 @@ export default {
   width: 100%;
   border-collapse: collapse;
   margin: 16px 0;
-  font-size: 13px;
+  font-size: 12px;
+  display: block;
+  overflow-x: auto;
 
   th {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     font-weight: 600;
-    padding: 10px 12px;
+    padding: 8px 10px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
   }
 
   td {
-    padding: 10px 12px;
+    padding: 8px 10px;
     border-bottom: 1px solid var(--border-light);
     color: var(--text-primary);
+    vertical-align: middle;
   }
 
   tr:hover {
     background-color: var(--bg-secondary);
+  }
+
+  td:nth-child(1) {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  td:nth-child(2) {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  td:nth-child(3),
+  td:nth-child(4) {
+    white-space: nowrap;
   }
 }
 

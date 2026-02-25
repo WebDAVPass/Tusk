@@ -22,7 +22,8 @@ nav {
 
 #contentbox {
   margin: 0px auto;
-  width: $options-width;
+  max-width: 1400px;
+  width: calc(100% - 40px);
   padding: 20px 0;
   background-color: var(--bg-primary);
 }
