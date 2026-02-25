@@ -356,7 +356,7 @@ export default defineComponent({
     <!-- Unlock input group -->
     <div v-if="!busy && !isUnlocked" id="masterPasswordGroup">
       <div class="unlockLogo stack-item">
-        <img src="/assets/icons/exported/128x128.svg" width="256px" height="256px" />
+        <img src="/assets/icons/exported/128x128.svg" width="48px" height="48px" />
         <span>{{ $t('unlock.title') }}</span>
       </div>
 
@@ -599,7 +599,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 100px;
   background: var(--bg-primary);
 }
 
@@ -657,16 +657,16 @@ export default defineComponent({
 
 .unlockLogo {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 18px;
   text-align: center;
-  padding: 24px 0px;
+  padding: 16px 0px;
   color: var(--text-primary);
 
   img {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     vertical-align: middle;
-    margin-right: 12px;
+    margin-right: 10px;
     filter: drop-shadow(var(--shadow-md));
   }
 }
@@ -675,11 +675,12 @@ export default defineComponent({
 input[type='range'] {
   -webkit-appearance: none;
   width: 100%;
-  height: 6px;
-  background: var(--bg-tertiary);
+  height: 20px;
+  background: transparent;
   border-radius: 9999px;
   outline: none;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -692,6 +693,7 @@ input[type='range'] {
     box-shadow: var(--shadow-md);
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid var(--primary-color);
+    margin-top: -7px;
 
     &:hover {
       transform: scale(1.15);

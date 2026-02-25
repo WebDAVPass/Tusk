@@ -12,6 +12,7 @@ export default {
   },
   computed: {
     providerTitle() {
+      if (!this.providerManager) return '';
       // 根据 provider key 返回对应的 i18n 翻译键
       const keyMap = {
         sample: 'providers.sampleDatabase.title',
@@ -27,9 +28,10 @@ export default {
         return this.$t(i18nKey);
       }
       // 如果没有找到翻译，返回原始的英文标题
-      return this.providerManager.chooseTitle;
+      return this.providerManager.chooseTitle || '';
     },
     providerDescription() {
+      if (!this.providerManager) return '';
       // 根据 provider key 返回对应的 i18n 翻译键
       const keyMap = {
         sample: 'providers.sampleDatabase.description',
@@ -45,8 +47,12 @@ export default {
         return this.$t(i18nKey);
       }
       // 如果没有找到翻译，返回原始的英文描述
-      return this.providerManager.chooseDescription;
+      return this.providerManager.chooseDescription || '';
     },
+    providerIcon() {
+      if (!this.providerManager || !this.providerManager.icon) return '';
+      return this.providerManager.icon;
+    }
   },
 };
 </script>
@@ -57,7 +63,7 @@ export default {
       <div class="provider-title">
         <span class="title-content">
           <svg class="provider-icon" viewBox="0 0 1 1">
-            <use v-bind="{ 'xlink:href': '#' + providerManager.icon }" />
+            <use v-if="providerIcon" v-bind="{ 'xlink:href': '#' + providerIcon }" />
           </svg>
           <span class="title-text">{{ providerTitle }}</span>
         </span>
@@ -86,6 +92,8 @@ export default {
     <div class="provider-description">
       {{ providerDescription }}
     </div>
+    
+    <slot></slot>
   </div>
 </template>
 
@@ -247,8 +255,11 @@ export default {
 .provider-description {
   font-size: 13px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
   padding-top: 12px;
+  margin-top: 12px;
   border-top: 1px solid var(--border-light);
+  display: block;
+  visibility: visible;
 }
 </style>

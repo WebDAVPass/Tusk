@@ -124,7 +124,7 @@ button.action-button {
   padding: 12px $wall-padding;
   border-bottom: 1px solid $border-color;
   font-size: 16px;
-  background: white;
+  background: var(--bg-primary);
   transition: all $transition-base;
 
   &.button {
@@ -151,11 +151,11 @@ button.action-button {
   }
 
   &.lighter {
-    background-color: $bg-secondary;
+    background-color: var(--bg-secondary);
     border-radius: $radius-md;
     margin: $space-3 0;
-    border: 1px solid $border-light;
-    box-shadow: $shadow-sm;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
   }
 
   &.plain {

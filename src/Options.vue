@@ -16,7 +16,7 @@
           :p-cloud-file-manager="services.pCloudFileManager"
           :sample-manager="services.sampleDatabaseFileManager"
           :shared-url-manager="services.sharedUrlFileManager"
-          :webdav-manager="services.webdavManager"
+          :webdav-manager="services.webdavFileManager"
           :settings="services.settings"
         />
         <manage-keyfiles
@@ -138,7 +138,7 @@ export default {
           visible: false,
         },
         advanced: {
-          visble: false,
+          visible: false,
         },
         reauthorize: {
           visible: false,

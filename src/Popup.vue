@@ -115,7 +115,7 @@ const show = reactive({
     visible: false,
   },
   entryDetails: {
-    visble: false,
+    visible: false,
   },
 });
 
@@ -146,6 +146,8 @@ $router.route('/');
 
 #router-view {
   width: 400px;
+  max-height: 600px;
+  overflow-y: auto;
   margin: 0px auto;
   color: $text-color;
   background-color: $background-color;
