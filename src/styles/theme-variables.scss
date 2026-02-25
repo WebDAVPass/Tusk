@@ -1,0 +1,247 @@
+/**
+ * 深浅色主题变量系统
+ * 支持自动检测和手动切换
+ */
+
+// ============================================
+// 主题模式定义
+// ============================================
+:root {
+  // 浅色主题（默认）
+  --theme-mode: light;
+  
+  // 主色调
+  --primary-color: #0089ec;
+  --primary-light: #4dabf5;
+  --primary-dark: #0069c0;
+  --primary-rgb: 0, 137, 236;
+  
+  // 功能色
+  --success-color: #4caf50;
+  --success-light: #81c784;
+  --success-rgb: 76, 175, 80;
+  --warning-color: #ff9800;
+  --warning-light: #ffb74d;
+  --warning-rgb: 255, 152, 0;
+  --error-color: #f44336;
+  --error-light: #e57373;
+  --error-rgb: 244, 67, 54;
+  
+  // 文本颜色
+  --text-primary: #2c3e50;
+  --text-secondary: #5f6b7a;
+  --text-muted: #8b95a5;
+  --text-inverse: #ffffff;
+  
+  // 背景颜色
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-elevated: #ffffff;
+  
+  // 边框颜色
+  --border-color: #e0e4e8;
+  --border-light: #f0f2f5;
+  --border-inverse: rgba(255, 255, 255, 0.2);
+  
+  // 阴影
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 20px rgba(0, 137, 236, 0.3);
+  
+  // 开关特定颜色
+  --switch-bg-off: #e9ecef;
+  --switch-bg-on: linear-gradient(135deg, #0089ec 0%, #4dabf5 100%);
+  --switch-thumb: #ffffff;
+  
+  // 输入框
+  --input-bg: #ffffff;
+  --input-border: #e0e4e8;
+  --input-border-focus: #0089ec;
+  --input-placeholder: #8b95a5;
+  
+  // 卡片
+  --card-bg: #ffffff;
+  --card-border: #f0f2f5;
+  
+  // 覆盖层
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+}
+
+// ============================================
+// 深色主题
+// ============================================
+[data-theme="dark"] {
+  --theme-mode: dark;
+  
+  // 主色调（在深色模式下稍微亮一些）
+  --primary-color: #4dabf5;
+  --primary-light: #6fc5ff;
+  --primary-dark: #0089ec;
+  --primary-rgb: 77, 171, 245;
+  
+  // 功能色
+  --success-color: #66bb6a;
+  --success-light: #81c784;
+  --success-rgb: 102, 187, 106;
+  --warning-color: #ffa726;
+  --warning-light: #ffb74d;
+  --warning-rgb: 255, 167, 38;
+  --error-color: #ef5350;
+  --error-light: #e57373;
+  --error-rgb: 239, 83, 80;
+  
+  // 文本颜色
+  --text-primary: #e8eaed;
+  --text-secondary: #9aa0a6;
+  --text-muted: #5f6368;
+  --text-inverse: #202124;
+  
+  // 背景颜色
+  --bg-primary: #202124;
+  --bg-secondary: #303134;
+  --bg-tertiary: #3c4043;
+  --bg-elevated: #292a2d;
+  
+  // 边框颜色
+  --border-color: #3c4043;
+  --border-light: #5f6368;
+  --border-inverse: rgba(0, 0, 0, 0.2);
+  
+  // 阴影（深色模式下更柔和）
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(77, 171, 245, 0.4);
+  
+  // 开关特定颜色
+  --switch-bg-off: #5f6368;
+  --switch-bg-on: linear-gradient(135deg, #4dabf5 0%, #6fc5ff 100%);
+  --switch-thumb: #e8eaed;
+  
+  // 输入框
+  --input-bg: #292a2d;
+  --input-border: #5f6368;
+  --input-border-focus: #4dabf5;
+  --input-placeholder: #5f6368;
+  
+  // 卡片
+  --card-bg: #292a2d;
+  --card-border: #3c4043;
+  
+  // 覆盖层
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+}
+
+// ============================================
+// 系统自动检测（当设置为 auto 时）
+// ============================================
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] {
+    --theme-mode: dark;
+    
+    --primary-color: #4dabf5;
+    --primary-light: #6fc5ff;
+    --primary-dark: #0089ec;
+    --primary-rgb: 77, 171, 245;
+    
+    --success-color: #66bb6a;
+    --success-light: #81c784;
+    --warning-color: #ffa726;
+    --warning-light: #ffb74d;
+    --error-color: #ef5350;
+    --error-light: #e57373;
+    
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --text-muted: #5f6368;
+    --text-inverse: #202124;
+    
+    --bg-primary: #202124;
+    --bg-secondary: #303134;
+    --bg-tertiary: #3c4043;
+    --bg-elevated: #292a2d;
+    
+    --border-color: #3c4043;
+    --border-light: #5f6368;
+    --border-inverse: rgba(0, 0, 0, 0.2);
+    
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(77, 171, 245, 0.4);
+    
+    --switch-bg-off: #5f6368;
+    --switch-bg-on: linear-gradient(135deg, #4dabf5 0%, #6fc5ff 100%);
+    --switch-thumb: #e8eaed;
+    
+    --input-bg: #292a2d;
+    --input-border: #5f6368;
+    --input-border-focus: #4dabf5;
+    --input-placeholder: #5f6368;
+    
+    --card-bg: #292a2d;
+    --card-border: #3c4043;
+    
+    --overlay-bg: rgba(0, 0, 0, 0.7);
+  }
+}
+
+// ============================================
+// SCSS 变量映射（向后兼容）
+// ============================================
+$primary-color: var(--primary-color);
+$primary-light: var(--primary-light);
+$primary-dark: var(--primary-dark);
+
+$success-color: var(--success-color);
+$success-light: var(--success-light);
+$warning-color: var(--warning-color);
+$warning-light: var(--warning-light);
+$error-color: var(--error-color);
+$error-light: var(--error-light);
+
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-muted: var(--text-muted);
+$text-inverse: var(--text-inverse);
+
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-tertiary: var(--bg-tertiary);
+$bg-elevated: var(--bg-elevated);
+
+$border-color: var(--border-color);
+$border-light: var(--border-light);
+$border-inverse: var(--border-inverse);
+
+$shadow-sm: var(--shadow-sm);
+$shadow-md: var(--shadow-md);
+$shadow-lg: var(--shadow-lg);
+$shadow-glow: var(--shadow-glow);
+
+// ============================================
+// 圆角和间距（主题无关）
+// ============================================
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 16px;
+$radius-xl: 24px;
+$radius-full: 9999px;
+
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);

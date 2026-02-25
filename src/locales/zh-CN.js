@@ -431,4 +431,13 @@ export default {
     serverError: '服务器错误',
     unknown: '未知错误',
   },
+
+  // 主题设置
+  theme: {
+    title: '主题',
+    description: '选择 Tusk 界面的外观主题。',
+    auto: '自动',
+    light: '浅色',
+    dark: '深色',
+  },
 };

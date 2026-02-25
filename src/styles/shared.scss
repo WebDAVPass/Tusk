@@ -1,3 +1,8 @@
+/**
+ * 主题变量必须在最前面导入，以确保 CSS 变量最先定义
+ */
+@import './theme-variables.scss';
+
 @import '@materialize/components/theme.module.scss';
 @import '@materialize/components/tokens.module.scss';
 @import '@materialize/components/colors.module.scss';
@@ -11,9 +16,10 @@
 @import '@materialize/components/_preloader.scss';
 
 @import './settings.scss';
+@import './modern-theme.scss';
 
 .selectable {
-  transition: all 0.3s ease;
+  transition: all $transition-base;
 
   &:hover {
     cursor: pointer;
@@ -28,6 +34,7 @@
   width: 100%;
   justify-content: space-between;
   display: flex;
+  align-items: center;
 }
 
 .stack-item {
@@ -35,81 +42,120 @@
   width: 100%;
 }
 
+// 现代化错误提示样式
 .error {
-  border-left: 4px solid $light-red;
+  border-left: 4px solid $error-color;
+  background: rgba($error-color, 0.05);
+  border-radius: 0 $radius-sm $radius-sm 0;
 
   &.pill {
     border-left: 0px;
-    background-color: $light-red;
-    border-radius: 4px;
-    padding: 0px 4px;
+    background: linear-gradient(135deg, $error-color 0%, $error-light 100%);
+    color: white;
+    border-radius: $radius-full;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: $shadow-sm;
   }
 }
 
+// 现代化警告提示样式
 .warn {
-  border-left: 4px solid $warn-yellow;
+  border-left: 4px solid $warning-color;
+  background: rgba($warning-color, 0.05);
+  border-radius: 0 $radius-sm $radius-sm 0;
 
   &.pill {
     border-left: 0px;
-    background-color: $warn-yellow;
-    border-radius: 4px;
-    padding: 0 4px;
+    background: linear-gradient(135deg, $warning-color 0%, $warning-light 100%);
+    color: white;
+    border-radius: $radius-full;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: $shadow-sm;
   }
 }
 
+// 现代化成功提示样式
 .success {
-  border-left: 4px solid $green;
+  border-left: 4px solid $success-color;
+  background: rgba($success-color, 0.05);
+  border-radius: 0 $radius-sm $radius-sm 0;
 }
 
+// 现代化主要操作按钮
 button.action-button {
-  background-color: $blue;
-  color: $background-color;
-  font-size: 18px;
-  border-width: 1px 0px;
+  background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
   width: 100%;
-  border-top: 1px solid $light-gray;
-  border-bottom: 1px solid $light-gray;
+  border: none;
+  border-radius: $radius-md;
   margin: 0px;
-  padding: 4px;
+  padding: 14px 20px;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: all $transition-base;
+  box-shadow: $shadow-md;
 
   &:hover {
-    opacity: 0.7;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg, $shadow-glow;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: $shadow-md, 0 0 0 3px rgba($primary-color, 0.3);
   }
 }
 
+// 现代化面板/卡片样式
 .box-bar {
   width: 100%;
   box-sizing: border-box;
-  padding: 8px $wall-padding;
-  border-bottom: 2px solid $light-gray;
-  font-size: 18px;
+  padding: 12px $wall-padding;
+  border-bottom: 1px solid $border-color;
+  font-size: 16px;
+  background: white;
+  transition: all $transition-base;
 
   &.button {
-    background-color: $background-color;
+    background-color: $bg-secondary;
   }
 
   &.roomy {
-    padding: $wall-padding $options-wall-padding;
+    padding: $space-5 $options-wall-padding;
 
     &.small {
-      padding: 6px $options-wall-padding;
+      padding: $space-3 $options-wall-padding;
       font-size: 14px;
     }
   }
 
   &.small {
-    padding: 6px $wall-padding;
+    padding: $space-2 $wall-padding;
     font-size: 12px;
   }
 
   &.medium {
-    padding: 8px $wall-padding;
+    padding: $space-3 $wall-padding;
     font-size: 14px;
   }
 
   &.lighter {
-    background-color: $light-background-color;
+    background-color: $bg-secondary;
+    border-radius: $radius-md;
+    margin: $space-3 0;
+    border: 1px solid $border-light;
+    box-shadow: $shadow-sm;
   }
 
   &.plain {
@@ -121,19 +167,276 @@ button.action-button {
   }
 }
 
+// 现代化解锁Logo样式
 .unlockLogo {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 22px;
   text-align: center;
-  padding: 20px 0px;
+  padding: 24px 0px;
+  color: $text-primary;
 
   img {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     vertical-align: middle;
+    margin-right: $space-3;
+    filter: drop-shadow($shadow-md);
   }
 }
 
 .mr-10 {
   margin-right: 10px;
+}
+
+// 覆盖Materialize的开关样式为现代化样式
+.switch {
+  label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: $space-3;
+
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .lever {
+        background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+        box-shadow: $shadow-md, inset 0 1px 2px rgba(255, 255, 255, 0.2);
+
+        &::after {
+          transform: translateX(20px);
+          box-shadow: $shadow-md;
+        }
+      }
+
+      &:focus + .lever {
+        box-shadow: $shadow-md, 0 0 0 3px rgba($primary-color, 0.2);
+      }
+
+      &:disabled + .lever {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .lever {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: $bg-tertiary;
+      border-radius: $radius-full;
+      transition: all $transition-base;
+      box-shadow: $shadow-inner;
+      margin: 0;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: $radius-full;
+        transition: transform $transition-bounce;
+        box-shadow: $shadow-sm;
+      }
+    }
+  }
+}
+
+// 覆盖Materialize的输入框样式
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"] {
+  width: 100%;
+  padding: $space-3 $space-4;
+  font-size: 14px;
+  color: $text-primary;
+  background: white;
+  border: 2px solid $border-color;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+// 覆盖Materialize的选择器样式
+select {
+  appearance: none;
+  padding: $space-3 $space-8 $space-3 $space-4;
+  font-size: 14px;
+  color: $text-primary;
+  background: white;
+  border: 2px solid $border-color;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-base;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235f6b7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-3 center;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &:hover {
+    border-color: $primary-light;
+  }
+}
+
+// 覆盖Materialize的chip样式
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-3;
+  font-size: 12px;
+  font-weight: 500;
+  color: $text-primary;
+  background: $bg-secondary;
+  border-radius: $radius-full;
+  transition: all $transition-fast;
+  gap: $space-1;
+  height: auto;
+  line-height: 1.5;
+  border: 1px solid $border-light;
+
+  &:hover {
+    background: $bg-tertiary;
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  i {
+    cursor: pointer;
+    color: $text-muted;
+    transition: all $transition-fast;
+    font-size: 14px;
+
+    &:hover {
+      color: $error-color;
+      transform: scale(1.1);
+    }
+  }
+}
+
+// 覆盖Materialize的按钮样式
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3 $space-5;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-base;
+  box-shadow: $shadow-md;
+  text-decoration: none;
+  text-transform: none;
+  gap: $space-2;
+  height: auto;
+  line-height: 1.5;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg, $shadow-glow;
+    background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: $shadow-md, 0 0 0 3px rgba($primary-color, 0.3);
+  }
+}
+
+// 滑块样式覆盖
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: $bg-tertiary;
+  border-radius: $radius-full;
+  outline: none;
+  transition: all $transition-base;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: $radius-full;
+    cursor: pointer;
+    box-shadow: $shadow-md;
+    transition: all $transition-base;
+    border: 2px solid $primary-color;
+
+    &:hover {
+      transform: scale(1.15);
+      box-shadow: $shadow-lg, $shadow-glow;
+    }
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(90deg, $primary-color 0%, $primary-light 100%);
+    border-radius: $radius-full;
+  }
+
+  &:focus::-webkit-slider-thumb {
+    box-shadow: $shadow-lg, 0 0 0 4px rgba($primary-color, 0.2);
+  }
+}
+
+// 卡片容器样式
+.modern-container {
+  background: white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  padding: $space-5;
+  margin-bottom: $space-5;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+// 列表项悬停效果
+.hover-lift {
+  transition: all $transition-base;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
 }

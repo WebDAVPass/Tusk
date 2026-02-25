@@ -306,6 +306,14 @@ function Settings(secureCache) {
     return keyGetSetter('locale', locale, 'en', 'string');
   };
 
+  /**
+   * 获取/设置主题偏好
+   * @param {string} theme - 'auto', 'light', 'dark'
+   */
+  exports.getSetTheme = function (theme) {
+    return keyGetSetter('themePreference', theme, 'auto', 'string');
+  };
+
   return exports;
 }
 

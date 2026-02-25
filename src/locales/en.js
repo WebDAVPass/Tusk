@@ -414,4 +414,13 @@ export default {
     serverError: 'Server error',
     unknown: 'Unknown error',
   },
+
+  // 主题设置
+  theme: {
+    title: 'Theme',
+    description: 'Choose your preferred appearance for the Tusk interface.',
+    auto: 'Auto',
+    light: 'Light',
+    dark: 'Dark',
+  },
 };

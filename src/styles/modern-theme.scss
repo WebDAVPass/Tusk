@@ -1,0 +1,503 @@
+/**
+ * 现代化主题设计系统
+ * 包含圆角、阴影、过渡动画等现代化UI元素
+ */
+
+// ============================================
+// 颜色系统
+// ============================================
+$primary-color: #0089ec;
+$primary-light: #4dabf5;
+$primary-dark: #0069c0;
+
+$success-color: #4caf50;
+$success-light: #81c784;
+$warning-color: #ff9800;
+$warning-light: #ffb74d;
+$error-color: #f44336;
+$error-light: #e57373;
+
+$text-primary: #2c3e50;
+$text-secondary: #5f6b7a;
+$text-muted: #8b95a5;
+
+$bg-primary: #ffffff;
+$bg-secondary: #f8f9fa;
+$bg-tertiary: #e9ecef;
+
+$border-color: #e0e4e8;
+$border-light: #f0f2f5;
+
+// ============================================
+// 圆角系统
+// ============================================
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 16px;
+$radius-xl: 24px;
+$radius-full: 9999px;
+
+// ============================================
+// 阴影系统
+// ============================================
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+$shadow-glow: 0 0 20px rgba(0, 137, 236, 0.3);
+
+// ============================================
+// 过渡动画
+// ============================================
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+// ============================================
+// 间距系统
+// ============================================
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+
+// ============================================
+// 现代化开关组件样式
+// ============================================
+.modern-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .modern-switch-slider {
+      background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+      box-shadow: $shadow-md, inset 0 1px 2px rgba(255, 255, 255, 0.2);
+
+      &::before {
+        transform: translateX(20px);
+        box-shadow: $shadow-md;
+      }
+    }
+
+    &:focus + .modern-switch-slider {
+      box-shadow: $shadow-md, 0 0 0 3px rgba($primary-color, 0.2);
+    }
+
+    &:disabled + .modern-switch-slider {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .modern-switch-slider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: $bg-tertiary;
+    border-radius: $radius-full;
+    transition: all $transition-base;
+    box-shadow: $shadow-inner;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: $radius-full;
+      transition: transform $transition-bounce;
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  .modern-switch-label {
+    margin-left: $space-3;
+    font-size: 14px;
+    color: $text-primary;
+    font-weight: 500;
+  }
+}
+
+// ============================================
+// 现代化滑块组件样式
+// ============================================
+.modern-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: $bg-tertiary;
+  border-radius: $radius-full;
+  outline: none;
+  transition: all $transition-base;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: $radius-full;
+    cursor: pointer;
+    box-shadow: $shadow-md;
+    transition: all $transition-base;
+    border: 2px solid $primary-color;
+
+    &:hover {
+      transform: scale(1.15);
+      box-shadow: $shadow-lg, $shadow-glow;
+    }
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(90deg, $primary-color 0%, $primary-light 100%);
+    border-radius: $radius-full;
+  }
+
+  &:focus::-webkit-slider-thumb {
+    box-shadow: $shadow-lg, 0 0 0 4px rgba($primary-color, 0.2);
+  }
+}
+
+// ============================================
+// 现代化按钮样式
+// ============================================
+.modern-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3 $space-5;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-base;
+  box-shadow: $shadow-md;
+  text-decoration: none;
+  gap: $space-2;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg, $shadow-glow;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: $shadow-md, 0 0 0 3px rgba($primary-color, 0.3);
+  }
+
+  &.secondary {
+    background: white;
+    color: $text-primary;
+    border: 1px solid $border-color;
+
+    &:hover {
+      background: $bg-secondary;
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &.danger {
+    background: linear-gradient(135deg, $error-color 0%, $error-light 100%);
+
+    &:focus {
+      box-shadow: $shadow-md, 0 0 0 3px rgba($error-color, 0.3);
+    }
+  }
+
+  &.small {
+    padding: $space-2 $space-3;
+    font-size: 12px;
+  }
+
+  &.large {
+    padding: $space-4 $space-6;
+    font-size: 16px;
+  }
+}
+
+// ============================================
+// 现代化卡片样式
+// ============================================
+.modern-card {
+  background: white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  padding: $space-5;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+.modern-panel {
+  background: white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $space-4;
+  margin-bottom: $space-4;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// ============================================
+// 现代化输入框样式
+// ============================================
+.modern-input {
+  width: 100%;
+  padding: $space-3 $space-4;
+  font-size: 14px;
+  color: $text-primary;
+  background: white;
+  border: 2px solid $border-color;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &.error {
+    border-color: $error-color;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($error-color, 0.1);
+    }
+  }
+}
+
+.modern-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .modern-input {
+    padding-right: 40px;
+  }
+
+  .input-icon {
+    position: absolute;
+    right: $space-3;
+    color: $text-muted;
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+
+// ============================================
+// 现代化选择器样式
+// ============================================
+.modern-select {
+  appearance: none;
+  padding: $space-3 $space-8 $space-3 $space-4;
+  font-size: 14px;
+  color: $text-primary;
+  background: white;
+  border: 2px solid $border-color;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-base;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235f6b7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-3 center;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &:hover {
+    border-color: $primary-light;
+  }
+}
+
+// ============================================
+// 现代化标签/Chip样式
+// ============================================
+.modern-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-3;
+  font-size: 12px;
+  font-weight: 500;
+  color: $text-primary;
+  background: $bg-secondary;
+  border-radius: $radius-full;
+  transition: all $transition-fast;
+  gap: $space-1;
+
+  &:hover {
+    background: $bg-tertiary;
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  .chip-remove {
+    cursor: pointer;
+    color: $text-muted;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $error-color;
+    }
+  }
+}
+
+// ============================================
+// 现代化列表项样式
+// ============================================
+.modern-list-item {
+  display: flex;
+  align-items: center;
+  padding: $space-3 $space-4;
+  background: white;
+  border-radius: $radius-md;
+  margin-bottom: $space-2;
+  transition: all $transition-base;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:hover {
+    background: $bg-secondary;
+    border-color: $border-color;
+    transform: translateX(4px);
+    box-shadow: $shadow-sm;
+  }
+
+  &:active {
+    transform: translateX(2px);
+  }
+
+  &.selected {
+    background: rgba($primary-color, 0.05);
+    border-color: $primary-color;
+    box-shadow: $shadow-sm;
+  }
+}
+
+// ============================================
+// 现代化提示信息样式
+// ============================================
+.modern-alert {
+  padding: $space-3 $space-4;
+  border-radius: $radius-md;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-4;
+
+  &.info {
+    background: rgba($primary-color, 0.1);
+    color: $primary-dark;
+    border-left: 4px solid $primary-color;
+  }
+
+  &.success {
+    background: rgba($success-color, 0.1);
+    color: #2e7d32;
+    border-left: 4px solid $success-color;
+  }
+
+  &.warning {
+    background: rgba($warning-color, 0.1);
+    color: #e65100;
+    border-left: 4px solid $warning-color;
+  }
+
+  &.error {
+    background: rgba($error-color, 0.1);
+    color: #c62828;
+    border-left: 4px solid $error-color;
+  }
+}
+
+// ============================================
+// 动画关键帧
+// ============================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba($primary-color, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba($primary-color, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn $transition-base forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn $transition-base forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}

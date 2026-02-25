@@ -458,20 +458,23 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@import '../styles/settings.scss';
-
+// 使用CSS变量以支持深色模式
 #masterPasswordGroup {
+  padding: 16px;
+  background: var(--bg-primary);
+
   .keyfile-picker {
-    background-color: $light-background-color;
+    background-color: var(--bg-secondary);
     box-sizing: border-box;
-    transition: all 0.2s linear;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     max-height: 200px;
     overflow-y: auto;
     opacity: 1;
-    border-top: 1px solid $light-gray;
-    border-bottom: 1px solid $light-gray;
-    padding: 5px $wall-padding;
-    margin: 5px 0px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    padding: 12px;
+    margin: 12px 0;
+    box-shadow: var(--shadow-sm);
 
     &.keyfile-picker-enter,
     &.keyfile-picker-leave-to {
@@ -481,109 +484,266 @@ export default defineComponent({
 
     span {
       display: block;
-      padding: 2px 0px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 4px;
+      color: var(--text-primary);
 
       &:hover {
-        padding-left: 3px;
+        background: var(--bg-tertiary);
+        padding-left: 16px;
+        box-shadow: var(--shadow-sm);
       }
     }
   }
 
   #select-keyfile {
-    padding: 8px $wall-padding;
-    background-color: $light-background-color;
-    border-bottom: 1px solid $light-gray;
+    padding: 12px 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    color: var(--text-primary);
 
     i {
       font-size: 14px;
+      margin-right: 8px;
+      color: var(--primary-color);
     }
 
     &:hover {
-      opacity: 0.7;
+      background: var(--bg-tertiary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
     }
   }
 
   #rememberPeriodLength {
-    width: 80px;
-    float: left;
+    width: 100%;
+    margin-top: 12px;
   }
 
   .masterPasswordInput {
-    border-top: 1px solid $light-gray;
     position: relative;
+    margin: 12px 0;
+
+    input {
+      padding-right: 40px;
+    }
 
     i {
       position: absolute;
-      font-size: 14px;
-      top: calc(50% - 0.5em);
-      right: 10px;
+      font-size: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 16px;
       cursor: pointer;
+      color: var(--text-muted);
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 8px;
+      border-radius: 6px;
+
+      &:hover {
+        color: var(--primary-color);
+        background: rgba(var(--primary-rgb), 0.1);
+      }
     }
   }
 
   input[type='text'],
   input[type='password'] {
-    width: calc(100% - 1em);
+    width: 100%;
     box-sizing: border-box;
-    font-size: 18px;
-    border-width: 0px 0px;
-    padding: 5px $wall-padding;
+    font-size: 16px;
+    padding: 16px;
+    border: 2px solid var(--input-border);
+    border-radius: 10px;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--input-bg);
+    color: var(--text-primary);
 
     &:focus {
       outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    }
+
+    &::placeholder {
+      color: var(--input-placeholder);
     }
   }
 
   .remember-period-picker {
-    margin: 6px 0px;
+    margin: 16px 0;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+
+    label {
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
 
     input[type='range'] {
-      -webkit-appearance: none;
-      margin: 6px;
-      margin-left: 0px;
+      margin-top: 12px;
     }
-  }
-
-  input[type='range']:focus {
-    outline: none;
-  }
-
-  input[type='range']::-webkit-slider-runnable-track {
-    height: 6px;
-    cursor: pointer;
-    animate: 0.2s;
-    background: $blue;
-    border-radius: 1.3px;
-    border: 0.2px solid #010101;
-    margin-top: -2px;
-  }
-
-  input[type='range']::-webkit-slider-thumb {
-    border: 1px solid black;
-    height: 18px;
-    width: 10px;
-    border-radius: 2px;
-    background: white;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -7px;
   }
 }
 
 .spinner {
-  padding: $wall-padding;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  background: var(--bg-primary);
 }
 
-.footer span {
-  padding: 2px 4px;
-  border-radius: 3px;
+.footer {
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  border-radius: 0 0 10px 10px;
 
-  &:hover {
-    background-color: $dark-background-color;
+  span {
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 13px;
+    color: var(--text-secondary);
+
+    &:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--primary-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    i {
+      margin-right: 4px;
+    }
   }
 }
 
 .databaseChoose {
-  padding-left: 5px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.05) 0%, rgba(var(--primary-rgb), 0.1) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  margin-bottom: 12px;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(var(--primary-rgb), 0.15) 100%);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+
+  b {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+
+  .muted-color {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-left: 8px;
+  }
+}
+
+.unlockLogo {
+  font-weight: 700;
+  font-size: 22px;
+  text-align: center;
+  padding: 24px 0px;
+  color: var(--text-primary);
+
+  img {
+    width: 56px;
+    height: 56px;
+    vertical-align: middle;
+    margin-right: 12px;
+    filter: drop-shadow(var(--shadow-md));
+  }
+}
+
+// 滑块样式
+input[type='range'] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: 9999px;
+  outline: none;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--switch-thumb);
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid var(--primary-color);
+
+    &:hover {
+      transform: scale(1.15);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+    }
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    border-radius: 9999px;
+  }
+
+  &:focus::-webkit-slider-thumb {
+    box-shadow: var(--shadow-lg), 0 0 0 4px rgba(var(--primary-rgb), 0.2);
+  }
+}
+
+// 按钮样式
+button.action-button {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  margin: 0px;
+  padding: 14px 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: var(--shadow-md), 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+  }
 }
 </style>
