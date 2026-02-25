@@ -85,37 +85,8 @@
   border-radius: 0 $radius-sm $radius-sm 0;
 }
 
-// 现代化主要操作按钮
-button.action-button {
-  background: linear-gradient(135deg, $primary-color 0%, $primary-light 100%);
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-  border: none;
-  border-radius: $radius-md;
-  margin: 0px;
-  padding: 14px 20px;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: all $transition-base;
-  box-shadow: $shadow-md;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-lg, $shadow-glow;
-  }
-
-  &:active {
-    transform: translateY(0);
-    box-shadow: $shadow-sm;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: $shadow-md, 0 0 0 3px rgba($primary-color, 0.3);
-  }
-}
+// 现代化主要操作按钮（在 settings.scss 中定义）
+// button.action-button 样式已移至 settings.scss 以避免重复
 
 // 现代化面板/卡片样式
 .box-bar {
@@ -248,92 +219,11 @@ button.action-button {
   }
 }
 
-// 覆盖Materialize的输入框样式
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="url"] {
-  width: 100%;
-  padding: $space-3 $space-4;
-  font-size: 14px;
-  color: $text-primary;
-  background: white;
-  border: 2px solid $border-color;
-  border-radius: $radius-md;
-  transition: all $transition-base;
-  box-sizing: border-box;
+// 输入框、选择器、滑块样式（在 settings.scss 中定义）
+// 这些样式已移至 settings.scss 以避免重复，并使用 CSS 变量支持深色模式
 
-  &:focus {
-    outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-  }
-
-  &::placeholder {
-    color: $text-muted;
-  }
-}
-
-// 覆盖Materialize的选择器样式
-select {
-  appearance: none;
-  padding: $space-3 $space-8 $space-3 $space-4;
-  font-size: 14px;
-  color: $text-primary;
-  background: white;
-  border: 2px solid $border-color;
-  border-radius: $radius-md;
-  cursor: pointer;
-  transition: all $transition-base;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235f6b7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right $space-3 center;
-
-  &:focus {
-    outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-  }
-
-  &:hover {
-    border-color: $primary-light;
-  }
-}
-
-// 覆盖Materialize的chip样式
-.chip {
-  display: inline-flex;
-  align-items: center;
-  padding: $space-1 $space-3;
-  font-size: 12px;
-  font-weight: 500;
-  color: $text-primary;
-  background: $bg-secondary;
-  border-radius: $radius-full;
-  transition: all $transition-fast;
-  gap: $space-1;
-  height: auto;
-  line-height: 1.5;
-  border: 1px solid $border-light;
-
-  &:hover {
-    background: $bg-tertiary;
-    transform: translateY(-1px);
-    box-shadow: $shadow-sm;
-  }
-
-  i {
-    cursor: pointer;
-    color: $text-muted;
-    transition: all $transition-fast;
-    font-size: 14px;
-
-    &:hover {
-      color: $error-color;
-      transform: scale(1.1);
-    }
-  }
-}
+// chip 样式（在 settings.scss 中定义）
+// .chip 样式已移至 settings.scss 以避免重复
 
 // 覆盖Materialize的按钮样式
 .btn {
@@ -373,51 +263,8 @@ select {
   }
 }
 
-// 滑块样式覆盖
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 20px;
-  background: transparent;
-  border-radius: $radius-full;
-  outline: none;
-  transition: all $transition-base;
-  cursor: pointer;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: var(--switch-thumb);
-    border-radius: $radius-full;
-    cursor: pointer;
-    box-shadow: var(--shadow-md);
-    transition: all $transition-base;
-    border: 2px solid var(--primary-color);
-    margin-top: -7px;
-
-    &:hover {
-      transform: scale(1.15);
-      box-shadow: var(--shadow-lg), var(--shadow-glow);
-    }
-
-    &:active {
-      transform: scale(0.95);
-      box-shadow: var(--shadow-sm);
-    }
-  }
-
-  &::-webkit-slider-runnable-track {
-    height: 6px;
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
-    border-radius: $radius-full;
-  }
-
-  &:focus::-webkit-slider-thumb {
-    box-shadow: var(--shadow-lg), 0 0 0 4px rgba(var(--primary-rgb), 0.2);
-  }
-}
+// 滑块样式（在 settings.scss 中定义）
+// input[type="range"] 样式已移至 settings.scss 以避免重复
 
 // 卡片容器样式
 .modern-container {
