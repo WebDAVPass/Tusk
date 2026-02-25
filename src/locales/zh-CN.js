@@ -328,7 +328,25 @@ export default {
 
   // 提供者组件
   providers: {
+    sampleDatabase: {
+      title: '示例数据库',
+      description: '您可以使用示例数据库来试用功能。主密码是 123。',
+    },
+    dropbox: {
+      title: 'Dropbox',
+      description: '访问存储在 Dropbox 上的密码文件。每次使用时都会从 Dropbox 检索文件。',
+    },
+    googleDrive: {
+      title: 'Google Drive',
+      description: '访问存储在 Google Drive 上的密码文件。每次使用时都会从 Google Drive 获取文件。',
+    },
+    oneDrive: {
+      title: 'OneDrive',
+      description: '访问存储在 OneDrive 上的密码文件。每次使用时都会从 OneDrive 检索文件。',
+    },
     sharedLink: {
+      title: '共享链接',
+      description: '无需授予对云存储提供者的完全访问权限，获取共享链接并粘贴进来。任何直接 HTTP 链接都可以，支持 Dropbox 和 Google Drive。',
       examples: {
         title: '示例：',
         dropbox: 'Dropbox URL 示例',
@@ -353,16 +371,20 @@ export default {
       },
     },
     localFile: {
+      title: '文件系统（不推荐）',
+      description: '从您的本地或远程文件系统上传文件。文件的副本将保存在浏览器的本地存储中。如果您在本地系统上更新了数据库，则需要重新导入才能看到更改。',
       warning:
         'Tusk 无法保持您的本地数据库文件为最新。如果您更改了它，您需要重新将其导入 Tusk。',
       selectFile: '选择本地文件',
       invalidFile: '不是有效的 KeePass v2+ 文件。',
     },
     webdav: {
+      title: 'WebDAV（测试版）',
+      description: '从任何 WebDAV 文件服务器选择数据库。Tusk 将始终使您的数据库与服务器保持同步，并自动拉取新版本。警告：如果您需要用户名/密码来使用 webdav，Tusk 会将它们以未加密形式存储在磁盘上。',
       warning: '等等！您阅读了最佳实践指南吗？先去做！',
       bestPracticesGuide: '最佳实践指南',
-      description:
-        '下面的 URL 应该是文件夹的路径，而不是单个文件。WebDAV 提供者通过递归扫描您指定的文件夹中的所有文件来工作。您的 KeePass 数据库将通过其文件扩展名（.kdbx）被发现。',
+      descriptionDetail:
+        '下面的 URL 应该是文件夹的路径，而不是单个文件。WebDAV 提供者通过递归扫描您指定的文件夹中的所有文件来工作。您的 KeePass 数据库将通过其文件扩展名（.kdbx）被发现。', 
       table: {
         user: '用户',
         url: 'URL',

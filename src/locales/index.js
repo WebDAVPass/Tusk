@@ -20,6 +20,20 @@ function getBrowserLocale() {
 }
 
 /**
+ * 简单的消息格式化函数，支持 {variable} 插值
+ * 避免使用 new Function()
+ * @param {string} message - 消息模板
+ * @param {Object} values - 要插入的值
+ * @returns {string} 格式化后的消息
+ */
+function simpleFormat(message, values = {}) {
+  if (typeof message !== 'string') return message;
+  return message.replace(/\{(\w+)\}/g, (match, key) => {
+    return values.hasOwnProperty(key) ? values[key] : match;
+  });
+}
+
+/**
  * 创建 i18n 实例
  * @param {string} locale - 默认语言
  * @returns {Object} i18n 实例
@@ -33,9 +47,15 @@ export function createI18nInstance(locale = 'en') {
       en,
       'zh-CN': zhCN,
     },
-    // 禁用运行时编译，避免使用 new Function()
+    // 使用自定义消息编译器，避免使用 new Function()
     messageCompiler: (message) => {
-      return () => message;
+      return (ctx) => {
+        // 支持 {key} 格式的变量插值
+        if (typeof message === 'string') {
+          return simpleFormat(message, ctx.values || {});
+        }
+        return message;
+      };
     },
   });
 

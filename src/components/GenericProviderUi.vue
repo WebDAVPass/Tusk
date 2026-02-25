@@ -10,6 +10,44 @@ export default {
     removeable: Boolean,
     removeFunction: Function,
   },
+  computed: {
+    providerTitle() {
+      // 根据 provider key 返回对应的 i18n 翻译键
+      const keyMap = {
+        'sample': 'providers.sampleDatabase.title',
+        'dropbox': 'providers.dropbox.title',
+        'gdrive': 'providers.googleDrive.title',
+        'onedrive': 'providers.oneDrive.title',
+        'shared-url': 'providers.sharedLink.title',
+        'webdav': 'providers.webdav.title',
+        'local': 'providers.localFile.title',
+      };
+      const i18nKey = keyMap[this.providerManager.key];
+      if (i18nKey && this.$te(i18nKey)) {
+        return this.$t(i18nKey);
+      }
+      // 如果没有找到翻译，返回原始的英文标题
+      return this.providerManager.chooseTitle;
+    },
+    providerDescription() {
+      // 根据 provider key 返回对应的 i18n 翻译键
+      const keyMap = {
+        'sample': 'providers.sampleDatabase.description',
+        'dropbox': 'providers.dropbox.description',
+        'gdrive': 'providers.googleDrive.description',
+        'onedrive': 'providers.oneDrive.description',
+        'shared-url': 'providers.sharedLink.description',
+        'webdav': 'providers.webdav.description',
+        'local': 'providers.localFile.description',
+      };
+      const i18nKey = keyMap[this.providerManager.key];
+      if (i18nKey && this.$te(i18nKey)) {
+        return this.$t(i18nKey);
+      }
+      // 如果没有找到翻译，返回原始的英文描述
+      return this.providerManager.chooseDescription;
+    },
+  },
 };
 </script>
 
@@ -21,7 +59,7 @@ export default {
           <svg class="icon" viewBox="0 0 1 1">
             <use v-bind="{ 'xlink:href': '#' + providerManager.icon }" />
           </svg>
-          {{ providerManager.chooseTitle }}
+          {{ providerTitle }}
         </span>
         <span v-show="error.length" class="error pill">{{ error }}</span>
       </div>
@@ -46,7 +84,7 @@ export default {
       </span>
     </div>
     <div class="description">
-      {{ providerManager.chooseDescription }}
+      {{ providerDescription }}
     </div>
   </div>
 </template>
