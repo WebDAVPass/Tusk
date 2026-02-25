@@ -32,10 +32,10 @@ jobs:
           yarn --version
       
       - name: Install dependencies
-        run: corepack run yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
       
       - name: Build Chrome extension
-        run: corepack run yarn build
+        run: yarn build
       
       - name: Package Chrome extension
         run: |
@@ -43,7 +43,7 @@ jobs:
           zip -r chrome-extension.zip extension/*
       
       - name: Build Firefox extension
-        run: corepack run yarn build:ff
+        run: yarn build:ff
       
       - name: Package Firefox extension
         run: |
