@@ -135,20 +135,29 @@ export default {
         <b>{{ $t('providers.sharedLink.examples.dropbox') }}</b>
         https://www.dropbox.com/scl/fi/FILE_ID/filename.kdbx?rlkey=&st=&dl=1
       </li>
-      <li><b>{{ $t('providers.sharedLink.examples.googleDriveOneDrive') }}</b></li>
+      <li>
+        <b>{{ $t('providers.sharedLink.examples.googleDriveOneDrive') }}</b>
+      </li>
       <li>
         {{ $t('providers.sharedLink.examples.otherCloud') }}
       </li>
     </ul>
     <div v-if="loggedIn" class="url-form shared-link-box">
-      <input id="shared-link" v-model="currentUrl" type="text" :placeholder="$t('providers.sharedLink.form.urlPlaceholder')" />
+      <input
+        id="shared-link"
+        v-model="currentUrl"
+        type="text"
+        :placeholder="$t('providers.sharedLink.form.urlPlaceholder')"
+      />
       <input
         id="shared-link-name"
         v-model="currentUrlTitle"
         type="text"
         :placeholder="$t('providers.sharedLink.form.namePlaceholder')"
       />
-      <a class="waves-effect waves-light btn" @click="addLink">{{ $t('providers.sharedLink.form.addButton') }}</a>
+      <a class="waves-effect waves-light btn" @click="addLink">{{
+        $t('providers.sharedLink.form.addButton')
+      }}</a>
     </div>
   </div>
 </template>

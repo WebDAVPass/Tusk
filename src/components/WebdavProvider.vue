@@ -154,7 +154,9 @@ export default {
             <a v-show="!server.scanBusy" class="selectable" @click="scan(server.serverId)">
               <i class="fa fa-search" /> {{ $t('providers.webdav.scan') }}</a
             >
-            <a v-show="server.scanBusy"><i class="fa fa-spinner fa-pulse" /> {{ $t('providers.webdav.scanning') }}</a>
+            <a v-show="server.scanBusy"
+              ><i class="fa fa-spinner fa-pulse" /> {{ $t('providers.webdav.scanning') }}</a
+            >
           </td>
           <td>
             <a class="selectable" @click="remove(server.serverId)">
@@ -164,7 +166,9 @@ export default {
         </tr>
       </table>
       <div v-if="loggedIn">
-        <p><b>{{ $t('providers.webdav.addNewServer') }}</b></p>
+        <p>
+          <b>{{ $t('providers.webdav.addNewServer') }}</b>
+        </p>
         <div id="webdav-server-input-box">
           <input
             id="webdav-server"
@@ -185,7 +189,9 @@ export default {
             :placeholder="$t('providers.webdav.form.passwordPlaceholder')"
           />
         </div>
-        <a class="waves-effect waves-light btn" @click="addServer">{{ $t('providers.webdav.form.addButton') }}</a>
+        <a class="waves-effect waves-light btn" @click="addServer">{{
+          $t('providers.webdav.form.addButton')
+        }}</a>
       </div>
     </div>
   </div>

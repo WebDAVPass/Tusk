@@ -66,7 +66,9 @@ export default {
         {{ $t('manageKeyfiles.warning') }}
       </p>
       <input id="file" multiple type="file" style="display: none" name="file" @change="handleAdd" />
-      <a class="waves-effect waves-light btn" @click="selectFileInput">{{ $t('manageKeyfiles.addKeyFile') }}</a>
+      <a class="waves-effect waves-light btn" @click="selectFileInput">{{
+        $t('manageKeyfiles.addKeyFile')
+      }}</a>
       <p v-if="errorMessage" class="box-bar error white-text">
         {{ errorMessage }}
       </p>

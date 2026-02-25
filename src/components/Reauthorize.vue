@@ -41,7 +41,9 @@ export default {
       </p>
     </div>
     <div class="box-bar roomy lighter">
-      <a class="waves-effect waves-light btn" @click="launchAuth">{{ $t('reauthorize.authorizeButton', { provider: provider.title }) }}</a>
+      <a class="waves-effect waves-light btn" @click="launchAuth">{{
+        $t('reauthorize.authorizeButton', { provider: provider.title })
+      }}</a>
     </div>
     <div v-if="done" class="box-bar roomy plain">
       <h4><i class="fa fa-check" aria-hidden="true" /> {{ $t('reauthorize.success.title') }}</h4>

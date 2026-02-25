@@ -66,12 +66,12 @@ export default {
         {{ $t('manageDatabases.description') }}
       </p>
 
-      <a class="waves-effect waves-light btn mr-10" @click="tabRouter.route('/help/me/choose')"
-        >{{ $t('manageDatabases.helpMeChoose') }}</a
-      >
-      <a class="waves-effect waves-light btn" @click="tabRouter.route('/new/user')"
-        >{{ $t('manageDatabases.newUser') }}</a
-      >
+      <a class="waves-effect waves-light btn mr-10" @click="tabRouter.route('/help/me/choose')">{{
+        $t('manageDatabases.helpMeChoose')
+      }}</a>
+      <a class="waves-effect waves-light btn" @click="tabRouter.route('/new/user')">{{
+        $t('manageDatabases.newUser')
+      }}</a>
 
       <p v-show="show.help.visible" id="/help/me/choose">
         {{ $t('manageDatabases.helpText') }}

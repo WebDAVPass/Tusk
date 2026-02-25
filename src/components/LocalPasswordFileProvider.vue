@@ -137,7 +137,9 @@ export default {
           multiple
           @change="handleAdd"
         />
-        <a class="waves-effect waves-light btn" @click="selectFile">{{ $t('providers.localFile.selectFile') }}</a>
+        <a class="waves-effect waves-light btn" @click="selectFile">{{
+          $t('providers.localFile.selectFile')
+        }}</a>
       </div>
     </div>
   </div>

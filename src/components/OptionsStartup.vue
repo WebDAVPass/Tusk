@@ -14,15 +14,15 @@ export default {
 
       <p>{{ $t('optionsStartup.description') }}</p>
 
-      <a class="waves-effect waves-light btn" @click="$router.route('/manage/databases')"
-        >{{ $t('optionsStartup.step1') }}</a
-      >
+      <a class="waves-effect waves-light btn" @click="$router.route('/manage/databases')">{{
+        $t('optionsStartup.step1')
+      }}</a>
 
       <p>{{ $t('optionsStartup.step2Description') }}</p>
 
-      <a class="waves-effect waves-light btn" @click="$router.route('/manage/keyfiles')"
-        >{{ $t('optionsStartup.step2') }}</a
-      >
+      <a class="waves-effect waves-light btn" @click="$router.route('/manage/keyfiles')">{{
+        $t('optionsStartup.step2')
+      }}</a>
 
       <p>{{ $t('optionsStartup.step3Description') }}</p>
 

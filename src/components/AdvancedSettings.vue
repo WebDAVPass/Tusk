@@ -1,12 +1,12 @@
 <script>
-import JSONFormatter from 'json-formatter-js'
-import { isFirefox } from '@/lib/utils'
-import { toRaw } from 'vue'
+import JSONFormatter from 'json-formatter-js';
+import { isFirefox } from '@/lib/utils';
+import { toRaw } from 'vue';
 
 export default {
   props: {
     settings: Object,
-    secureCacheMemory: Object
+    secureCacheMemory: Object,
   },
   data() {
     return {
@@ -15,88 +15,86 @@ export default {
       hotkeyNavEnabled: false,
       allOriginPermission: false,
       allOriginPerms: {
-        origins: [
-          "https://*/*",
-          "http://*/*"
-        ]
+        origins: ['https://*/*', 'http://*/*'],
       },
       strictMatchEnabled: false,
       notificationsEnabled: ['expiration'],
       selectedLocale: 'en',
-      jsonState: [{
-        k: 'databaseUsages',                      // key
-        f: this.settings.getSetDatabaseUsages,    // getter
-        delete: {
-          f: this.settings.destroyLocalStorage, // remover
-          arg: 'databaseUsages',                // remover args
-          op: 'Delete'                          // remover button name
-        }
-      },
-      {
-        k: 'webdavServerList',
-        f: this.settings.getSetWebdavServerList,
-        delete: {
-          f: this.settings.destroyLocalStorage,
-          arg: 'webdavServerList',
-          op: 'Delete'
-        }
-      },
-      {
-        k: 'webdavDirectoryMap',
-        f: this.settings.getSetWebdavDirectoryMap,
-        delete: {
-          f: this.settings.destroyLocalStorage,
-          arg: 'webdavDirectoryMap',
-          op: 'Delete'
-        }
-      },
-      {
-        k: 'selectedDatabase',
-        f: this.settings.getCurrentDatabaseChoice,
-        delete: {
-          f: this.settings.destroyLocalStorage,
-          arg: 'selectedDatabase',
-          op: 'Delete'
-        }
-      },
-      {
-        k: 'keyFiles',
-        f: this.settings.getKeyFiles,
-        delete: {
-          f: this.settings.deleteAllKeyFiles,
-          arg: undefined,
-          op: 'Delete'
-        }
-      },
-      {
-        k: 'forgetTimes',
-        f: this.settings.getAllForgetTimes
-      },
-      {
-        k: 'sharedUrlList',
-        f: this.settings.getSharedUrlList,
-        delete: {
-          f: this.settings.destroyLocalStorage,
-          arg: 'sharedUrlList',
-          op: 'Delete'
-        }
-      },
-      ]
-    }
+      jsonState: [
+        {
+          k: 'databaseUsages', // key
+          f: this.settings.getSetDatabaseUsages, // getter
+          delete: {
+            f: this.settings.destroyLocalStorage, // remover
+            arg: 'databaseUsages', // remover args
+            op: 'Delete', // remover button name
+          },
+        },
+        {
+          k: 'webdavServerList',
+          f: this.settings.getSetWebdavServerList,
+          delete: {
+            f: this.settings.destroyLocalStorage,
+            arg: 'webdavServerList',
+            op: 'Delete',
+          },
+        },
+        {
+          k: 'webdavDirectoryMap',
+          f: this.settings.getSetWebdavDirectoryMap,
+          delete: {
+            f: this.settings.destroyLocalStorage,
+            arg: 'webdavDirectoryMap',
+            op: 'Delete',
+          },
+        },
+        {
+          k: 'selectedDatabase',
+          f: this.settings.getCurrentDatabaseChoice,
+          delete: {
+            f: this.settings.destroyLocalStorage,
+            arg: 'selectedDatabase',
+            op: 'Delete',
+          },
+        },
+        {
+          k: 'keyFiles',
+          f: this.settings.getKeyFiles,
+          delete: {
+            f: this.settings.deleteAllKeyFiles,
+            arg: undefined,
+            op: 'Delete',
+          },
+        },
+        {
+          k: 'forgetTimes',
+          f: this.settings.getAllForgetTimes,
+        },
+        {
+          k: 'sharedUrlList',
+          f: this.settings.getSharedUrlList,
+          delete: {
+            f: this.settings.destroyLocalStorage,
+            arg: 'sharedUrlList',
+            op: 'Delete',
+          },
+        },
+      ],
+    };
   },
   watch: {
     expireTime(newval, oldval) {
-      this.settings.getSetClipboardExpireInterval(parseInt(newval))
+      this.settings.getSetClipboardExpireInterval(parseInt(newval));
     },
     hotkeyNavEnabled(newval, oldval) {
-      this.settings.getSetHotkeyNavEnabled(newval)
+      this.settings.getSetHotkeyNavEnabled(newval);
     },
     strictMatchEnabled(newval, oldval) {
-      this.settings.getSetStrictModeEnabled(newval)
+      this.settings.getSetStrictModeEnabled(newval);
     },
     notificationsEnabled(newval) {
-      this.settings.getSetNotificationsEnabled(newval)
-    }
+      this.settings.getSetNotificationsEnabled(newval);
+    },
   },
   mounted() {
     this.init();
@@ -115,34 +113,34 @@ export default {
       this.allOriginPermission = !this.allOriginPermission;
     },
     init() {
-      this.settings.getSetClipboardExpireInterval().then(val => {
-        this.expireTime = val
-      })
-      this.settings.getSetHotkeyNavEnabled().then(val => {
-        this.hotkeyNavEnabled = val
-      })
-      this.settings.getSetNotificationsEnabled().then(val => {
-        this.notificationsEnabled = val
-      })
-      this.settings.getSetStrictModeEnabled().then(val => {
+      this.settings.getSetClipboardExpireInterval().then((val) => {
+        this.expireTime = val;
+      });
+      this.settings.getSetHotkeyNavEnabled().then((val) => {
+        this.hotkeyNavEnabled = val;
+      });
+      this.settings.getSetNotificationsEnabled().then((val) => {
+        this.notificationsEnabled = val;
+      });
+      this.settings.getSetStrictModeEnabled().then((val) => {
         this.strictMatchEnabled = val;
-      })
-      this.settings.getSetLocale().then(val => {
+      });
+      this.settings.getSetLocale().then((val) => {
         this.selectedLocale = val || 'en';
-      })
+      });
       if (!isFirefox()) {
         const rawPerms = toRaw(this.allOriginPerms);
-        chrome.permissions.contains(rawPerms, granted => {
+        chrome.permissions.contains(rawPerms, (granted) => {
           this.allOriginPermission = !!granted;
         });
       }
-      this.jsonState.forEach(blob => {
-        blob.f().then(result => {
+      this.jsonState.forEach((blob) => {
+        blob.f().then((result) => {
           if (result && Object.keys(result).length) {
-            let formatter = new JSONFormatter(result)
-            let place = document.getElementById(blob.k)
+            let formatter = new JSONFormatter(result);
+            let place = document.getElementById(blob.k);
             while (place.firstChild) place.removeChild(place.firstChild);
-            place.appendChild(formatter.render())
+            place.appendChild(formatter.render());
           } else {
             document.getElementById(blob.k).parentNode.parentNode.remove();
           }
@@ -154,9 +152,9 @@ export default {
         // 刷新页面以应用新语言
         window.location.reload();
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <template>
@@ -166,10 +164,7 @@ export default {
       <p>{{ $t('advancedSettings.clipboardExpireTime.description') }}</p>
     </div>
     <div class="box-bar roomy lighter">
-      <select
-        v-model="expireTime"
-        style="display: inline-block;"
-      >
+      <select v-model="expireTime" style="display: inline-block">
         <option value="1">
           {{ $t('advancedSettings.clipboardExpireTime.minutes1') }}
         </option>
@@ -196,10 +191,7 @@ export default {
       <div>
         <div class="switch">
           <label>
-            <input
-              v-model="hotkeyNavEnabled"
-              type="checkbox"
-            >
+            <input v-model="hotkeyNavEnabled" type="checkbox" />
             <span class="lever" />
             {{ $t('advancedSettings.hotkeyNavigation.label') }}
           </label>
@@ -207,30 +199,21 @@ export default {
       </div>
     </div>
 
-    <div
-      v-if="!isFirefox()"
-      class="box-bar roomy"
-    >
+    <div v-if="!isFirefox()" class="box-bar roomy">
       <h4>{{ $t('advancedSettings.allOriginPermission.title') }}</h4>
       <p>
-        <strong style="color:#d9534f">{{ $t('advancedSettings.allOriginPermission.warning') }}</strong> {{ $t('advancedSettings.allOriginPermission.description') }}
+        <strong style="color: #d9534f">{{
+          $t('advancedSettings.allOriginPermission.warning')
+        }}</strong>
+        {{ $t('advancedSettings.allOriginPermission.description') }}
       </p>
     </div>
-    <div
-      v-if="!isFirefox()"
-      class="box-bar roomy lighter"
-    >
+    <div v-if="!isFirefox()" class="box-bar roomy lighter">
       <div>
         <div class="switch">
           <label @click="toggleOriginPermissions">
-            <input
-              v-model="allOriginPermission"
-              type="checkbox"
-            >
-            <span
-              class="lever"
-              @click.prevent
-            />
+            <input v-model="allOriginPermission" type="checkbox" />
+            <span class="lever" @click.prevent />
             {{ $t('advancedSettings.allOriginPermission.label') }}
           </label>
         </div>
@@ -245,22 +228,14 @@ export default {
       <div>
         <div class="switch">
           <label>
-            <input
-              v-model="notificationsEnabled"
-              type="checkbox"
-              value="expiration"
-            >
+            <input v-model="notificationsEnabled" type="checkbox" value="expiration" />
             <span class="lever" />
             {{ $t('advancedSettings.notifications.passwordExpiration') }}
           </label>
         </div>
         <div class="switch">
           <label>
-            <input
-              v-model="notificationsEnabled"
-              type="checkbox"
-              value="clipboard"
-            >
+            <input v-model="notificationsEnabled" type="checkbox" value="clipboard" />
             <span class="lever" />
             {{ $t('advancedSettings.notifications.clipboardEvents') }}
           </label>
@@ -278,10 +253,7 @@ export default {
       <div>
         <div class="switch">
           <label>
-            <input
-              v-model="strictMatchEnabled"
-              type="checkbox"
-            >
+            <input v-model="strictMatchEnabled" type="checkbox" />
             <span class="lever" />
             {{ $t('advancedSettings.strictMatching.label') }}
           </label>
@@ -300,40 +272,38 @@ export default {
       <p>{{ $t('advancedSettings.language.description') }}</p>
     </div>
     <div class="box-bar roomy lighter">
-      <select v-model="selectedLocale" @change="changeLocale" style="display: inline-block;">
+      <select v-model="selectedLocale" style="display: inline-block" @change="changeLocale">
         <option value="en">{{ $t('advancedSettings.language.english') }}</option>
         <option value="zh-CN">{{ $t('advancedSettings.language.chinese') }}</option>
       </select>
     </div>
 
-    <div
-      v-for="blob in jsonState"
-      class="box-bar lighter roomy"
-    >
+    <div v-for="blob in jsonState" class="box-bar lighter roomy">
       <p>{{ blob.k }}</p>
       <div class="between">
-        <div
-          :id="blob.k"
-          class="json"
-        />
+        <div :id="blob.k" class="json" />
         <a
           v-if="blob.delete !== undefined"
           class="waves-effect waves-light btn"
-          @click="blob.delete.f(blob.delete.arg); init();"
-        >{{ blob.delete.op }}</a>
+          @click="
+            blob.delete.f(blob.delete.arg);
+            init();
+          "
+          >{{ blob.delete.op }}</a
+        >
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@import "../styles/settings.scss";
+@import '../styles/settings.scss';
 
 .json {
-	font-size: 12px;
+  font-size: 12px;
 }
 
 h4 {
-	font-size: 24px;
+  font-size: 24px;
 }
 </style>

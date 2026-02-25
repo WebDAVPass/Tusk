@@ -317,7 +317,8 @@ export default defineComponent({
         })
         .catch((err) => {
           console.error(err);
-          this.generalMessages['error'] = err.message || this.$t('unlock.errors.invalidKeyfileOrDatabase');
+          this.generalMessages['error'] =
+            err.message || this.$t('unlock.errors.invalidKeyfileOrDatabase');
           this.busy = false;
           throw err;
         });
@@ -353,7 +354,8 @@ export default defineComponent({
 
       <form @submit="clickUnlock">
         <div class="small selectable databaseChoose" @click="$router.route('/choose')">
-          <b>{{ databaseFileName }}</b> <span class="muted-color">{{ $t('unlock.changeDatabase') }}</span>
+          <b>{{ databaseFileName }}</b>
+          <span class="muted-color">{{ $t('unlock.changeDatabase') }}</span>
         </div>
 
         <div class="stack-item masterPasswordInput">
@@ -397,7 +399,8 @@ export default defineComponent({
                 <i class="fa fa-file fa-fw" aria-hidden="true" /> {{ kf.name }}
               </span>
               <span class="selectable" @click="links.openOptionsKeyfiles">
-                <i class="fa fa-wrench fa-fw" aria-hidden="true" /> {{ $t('unlock.manageKeyfiles') }}</span
+                <i class="fa fa-wrench fa-fw" aria-hidden="true" />
+                {{ $t('unlock.manageKeyfiles') }}</span
               >
             </div>
           </transition>
@@ -421,7 +424,9 @@ export default defineComponent({
         </div>
 
         <div class="stack-item">
-          <button class="action-button selectable" @click="clickUnlock">{{ $t('unlock.unlockDatabase') }}</button>
+          <button class="action-button selectable" @click="clickUnlock">
+            {{ $t('unlock.unlockDatabase') }}
+          </button>
         </div>
       </form>
     </div>

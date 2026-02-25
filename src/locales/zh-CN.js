@@ -34,13 +34,11 @@ export default {
     yes: '是',
     no: '否',
     ok: '确定',
-    cancel: '取消',
     submit: '提交',
     reset: '重置',
     refresh: '刷新',
     scan: '扫描',
     scanning: '扫描中',
-    remove: '移除',
     edit: '编辑',
     create: '创建',
     update: '更新',
@@ -104,7 +102,6 @@ export default {
     visible: '可见',
     hidden: '隐藏',
     open: '打开',
-    close: '关闭',
     closed: '已关闭',
     active: '活跃',
     inactive: '非活跃',
@@ -133,7 +130,6 @@ export default {
     note: '注意',
     tip: '提示',
     info: '信息',
-    warning: '警告',
     danger: '危险',
     caution: '谨慎',
     attention: '注意',
@@ -173,8 +169,7 @@ export default {
       invalidKeyfileOrDatabase: '无效的密钥文件或 KDBX 文件',
     },
     warnings: {
-      newSite:
-        '这可能是 Tusk 遇到的新网站。在填充密码之前，请仔细检查这是否是正确的网站。',
+      newSite: '这可能是 Tusk 遇到的新网站。在填充密码之前，请仔细检查这是否是正确的网站。',
       permissionGranted: '您之前已授予 Tusk 在 {origin} 上填充密码的权限',
     },
   },
@@ -252,8 +247,7 @@ export default {
   // 密钥文件管理
   manageKeyfiles: {
     title: '密钥文件',
-    description:
-      '密钥文件是一种可选的身份验证方法。有关密钥文件的更多信息，请访问 KeePass 网站',
+    description: '密钥文件是一种可选的身份验证方法。有关密钥文件的更多信息，请访问 KeePass 网站',
     warning:
       'Tusk 可以将您的密钥文件存储在浏览器的本地存储中，并在打开密码数据库时应用它们。网站和其他浏览器扩展无法访问这些文件。但是，它们以未加密形式存储在您的本地浏览器配置文件中，有权访问您设备的人可能会读取它们。',
     addKeyFile: '添加密钥文件',
@@ -346,13 +340,13 @@ export default {
     },
     sharedLink: {
       title: '共享链接',
-      description: '无需授予对云存储提供者的完全访问权限，获取共享链接并粘贴进来。任何直接 HTTP 链接都可以，支持 Dropbox 和 Google Drive。',
+      description:
+        '无需授予对云存储提供者的完全访问权限，获取共享链接并粘贴进来。任何直接 HTTP 链接都可以，支持 Dropbox 和 Google Drive。',
       examples: {
         title: '示例：',
         dropbox: 'Dropbox URL 示例',
         googleDriveOneDrive: 'Google Drive 和 OneDrive 共享链接不再有效',
-        otherCloud:
-          '其他云提供者共享链接可能无法工作，但直接 HTTP 文件链接可以。',
+        otherCloud: '其他云提供者共享链接可能无法工作，但直接 HTTP 文件链接可以。',
       },
       form: {
         urlPlaceholder: '共享链接 URL',
@@ -366,25 +360,25 @@ export default {
           'URL 必须包含文件路径。（例如 http://example.com 无效，但 http://example.com/file.ckp 有效。）',
         invalidGoogleDrive:
           '无效的 Google Drive 共享链接。预期格式：https://drive.google.com/file/d/FILE_ID',
-        googleDriveNotSupported:
-          'Google Drive 共享链接不再受支持。请使用 Google Drive 提供者。',
+        googleDriveNotSupported: 'Google Drive 共享链接不再受支持。请使用 Google Drive 提供者。',
       },
     },
     localFile: {
       title: '文件系统（不推荐）',
-      description: '从您的本地或远程文件系统上传文件。文件的副本将保存在浏览器的本地存储中。如果您在本地系统上更新了数据库，则需要重新导入才能看到更改。',
-      warning:
-        'Tusk 无法保持您的本地数据库文件为最新。如果您更改了它，您需要重新将其导入 Tusk。',
+      description:
+        '从您的本地或远程文件系统上传文件。文件的副本将保存在浏览器的本地存储中。如果您在本地系统上更新了数据库，则需要重新导入才能看到更改。',
+      warning: 'Tusk 无法保持您的本地数据库文件为最新。如果您更改了它，您需要重新将其导入 Tusk。',
       selectFile: '选择本地文件',
       invalidFile: '不是有效的 KeePass v2+ 文件。',
     },
     webdav: {
       title: 'WebDAV（测试版）',
-      description: '从任何 WebDAV 文件服务器选择数据库。Tusk 将始终使您的数据库与服务器保持同步，并自动拉取新版本。警告：如果您需要用户名/密码来使用 webdav，Tusk 会将它们以未加密形式存储在磁盘上。',
+      description:
+        '从任何 WebDAV 文件服务器选择数据库。Tusk 将始终使您的数据库与服务器保持同步，并自动拉取新版本。警告：如果您需要用户名/密码来使用 webdav，Tusk 会将它们以未加密形式存储在磁盘上。',
       warning: '等等！您阅读了最佳实践指南吗？先去做！',
       bestPracticesGuide: '最佳实践指南',
       descriptionDetail:
-        '下面的 URL 应该是文件夹的路径，而不是单个文件。WebDAV 提供者通过递归扫描您指定的文件夹中的所有文件来工作。您的 KeePass 数据库将通过其文件扩展名（.kdbx）被发现。', 
+        '下面的 URL 应该是文件夹的路径，而不是单个文件。WebDAV 提供者通过递归扫描您指定的文件夹中的所有文件来工作。您的 KeePass 数据库将通过其文件扩展名（.kdbx）被发现。',
       table: {
         user: '用户',
         url: 'URL',
@@ -402,8 +396,7 @@ export default {
       },
     },
     google: {
-      updateNotice:
-        'Google Drive 支持已更新！您现在可以授予 Tusk 访问每个 KeePass 文件的权限。',
+      updateNotice: 'Google Drive 支持已更新！您现在可以授予 Tusk 访问每个 KeePass 文件的权限。',
       troubleshooting: '阅读故障排除指南。',
       chooseButton: '选择数据库文件',
     },

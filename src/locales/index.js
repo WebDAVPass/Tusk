@@ -29,7 +29,7 @@ function getBrowserLocale() {
 function simpleFormat(message, values = {}) {
   if (typeof message !== 'string') return message;
   return message.replace(/\{(\w+)\}/g, (match, key) => {
-    return values.hasOwnProperty(key) ? values[key] : match;
+    return Object.prototype.hasOwnProperty.call(values, key) ? values[key] : match;
   });
 }
 

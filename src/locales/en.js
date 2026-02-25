@@ -34,13 +34,11 @@ export default {
     yes: 'Yes',
     no: 'No',
     ok: 'OK',
-    cancel: 'Cancel',
     submit: 'Submit',
     reset: 'Reset',
     refresh: 'Refresh',
     scan: 'Scan',
     scanning: 'Scanning',
-    remove: 'Remove',
     edit: 'Edit',
     create: 'Create',
     update: 'Update',
@@ -104,7 +102,6 @@ export default {
     visible: 'Visible',
     hidden: 'Hidden',
     open: 'Open',
-    close: 'Close',
     closed: 'Closed',
     active: 'Active',
     inactive: 'Inactive',
@@ -133,7 +130,6 @@ export default {
     note: 'Note',
     tip: 'Tip',
     info: 'Info',
-    warning: 'Warning',
     danger: 'Danger',
     caution: 'Caution',
     attention: 'Attention',
@@ -145,8 +141,7 @@ export default {
     description:
       'Tusk is an extension that uses your existing KeePass database files to autofill passwords on websites. In order to continue, you must add your KeePass database file(s).',
     addDatabase: 'Add a KeePass database file',
-    returnHint:
-      "You can return here when you've enabled one of the database file providers.",
+    returnHint: "You can return here when you've enabled one of the database file providers.",
   },
 
   // 解锁页面
@@ -186,8 +181,7 @@ export default {
     searchPlaceholder: 'search entire database...',
     noMatches: 'No matches found for this site.',
     noCloseMatches: 'No close matches, showing {count} partial matches.',
-    noPerfectMatches:
-      'No perfect origin matches, showing {count} partial matches.',
+    noPerfectMatches: 'No perfect origin matches, showing {count} partial matches.',
   },
 
   // 条目列表项
@@ -284,7 +278,7 @@ export default {
       title: 'Grant Permission on All Websites',
       warning: "Only proceed if you know what you're doing.",
       description:
-        "If enabled, the extension prompts once for permission to access and change data on all websites which disables the permissions popup on each new website. This has serious security implications. Only applies to Chrome. Because of a Chrome bug, it is currently impossible to revoke this permission again after it is enabled. If you turn this ON, Tusk must be reinstalled to reset.",
+        'If enabled, the extension prompts once for permission to access and change data on all websites which disables the permissions popup on each new website. This has serious security implications. Only applies to Chrome. Because of a Chrome bug, it is currently impossible to revoke this permission again after it is enabled. If you turn this ON, Tusk must be reinstalled to reset.',
       label: 'Grant All Permissions',
       securityImplications: 'serious security implications',
     },
@@ -297,7 +291,7 @@ export default {
     strictMatching: {
       title: 'Enable Strict Matching',
       description:
-        "If enabled, only entries whose origins match exactly will be suggested for input. Titles and other tab information will not be considered in matching. For example, www.google.com will not match https://google.com",
+        'If enabled, only entries whose origins match exactly will be suggested for input. Titles and other tab information will not be considered in matching. For example, www.google.com will not match https://google.com',
       label: 'Strict Matching',
     },
     storedData: {

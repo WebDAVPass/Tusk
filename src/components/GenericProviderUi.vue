@@ -14,13 +14,13 @@ export default {
     providerTitle() {
       // 根据 provider key 返回对应的 i18n 翻译键
       const keyMap = {
-        'sample': 'providers.sampleDatabase.title',
-        'dropbox': 'providers.dropbox.title',
-        'gdrive': 'providers.googleDrive.title',
-        'onedrive': 'providers.oneDrive.title',
+        sample: 'providers.sampleDatabase.title',
+        dropbox: 'providers.dropbox.title',
+        gdrive: 'providers.googleDrive.title',
+        onedrive: 'providers.oneDrive.title',
         'shared-url': 'providers.sharedLink.title',
-        'webdav': 'providers.webdav.title',
-        'local': 'providers.localFile.title',
+        webdav: 'providers.webdav.title',
+        local: 'providers.localFile.title',
       };
       const i18nKey = keyMap[this.providerManager.key];
       if (i18nKey && this.$te(i18nKey)) {
@@ -32,13 +32,13 @@ export default {
     providerDescription() {
       // 根据 provider key 返回对应的 i18n 翻译键
       const keyMap = {
-        'sample': 'providers.sampleDatabase.description',
-        'dropbox': 'providers.dropbox.description',
-        'gdrive': 'providers.googleDrive.description',
-        'onedrive': 'providers.oneDrive.description',
+        sample: 'providers.sampleDatabase.description',
+        dropbox: 'providers.dropbox.description',
+        gdrive: 'providers.googleDrive.description',
+        onedrive: 'providers.oneDrive.description',
         'shared-url': 'providers.sharedLink.description',
-        'webdav': 'providers.webdav.description',
-        'local': 'providers.localFile.description',
+        webdav: 'providers.webdav.description',
+        local: 'providers.localFile.description',
       };
       const i18nKey = keyMap[this.providerManager.key];
       if (i18nKey && this.$te(i18nKey)) {
