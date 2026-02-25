@@ -1,13 +1,32 @@
-<!-- 
+<!--
   Navbar:
   requires a lib/VirtualRouter, and the routes object used to initialize the virtualrouter.
   Active tab changes automatically based on visible route.
 -->
 <script>
 export default {
+  name: 'AppNavbar',
   props: {
     routes: Array,
     initialTab: String,
+  },
+  methods: {
+    /**
+     * 获取路由的本地化名称
+     * @param {Object} route - 路由对象
+     * @returns {string} 本地化的路由名称
+     */
+    getRouteName(route) {
+      const routeNameMap = {
+        gettingStarted: this.$t('navbar.gettingStarted'),
+        manageDatabases: this.$t('navbar.manageDatabases'),
+        manageKeyfiles: this.$t('navbar.manageKeyfiles'),
+        advanced: this.$t('navbar.advanced'),
+        reauthorize: this.$t('navbar.reauthorize'),
+      };
+      const key = route.name ? route.name.replace(/\s+/g, '').toLowerCase() : '';
+      return routeNameMap[key] || route.name;
+    },
   },
 };
 </script>
@@ -19,7 +38,7 @@ export default {
         <!-- set class like /advanced-active-listener so the router can set -->
         <template v-for="route in routes" :key="route.name">
           <li v-if="!route.hidden_from_navbar" class="tab" :class="{ active: route.var.visible }">
-            <a @click="$router.route(route.route)">{{ route.name }}</a>
+            <a @click="$router.route(route.route)">{{ getRouteName(route) }}</a>
           </li>
         </template>
       </ul>

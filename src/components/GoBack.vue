@@ -10,7 +10,7 @@ export default {
   <div class="box-bar selectable" @click="$router.goBack">
     <span>
       <i class="fa fa-long-arrow-left" aria-hidden="true" />
-      {{ message }}
+      {{ message || $t('goBack.defaultMessage') }}
     </span>
   </div>
 </template>

@@ -52,17 +52,12 @@ export default {
   <div>
     <div class="warn pill">
       <p>
-        <b>Google Drive support has updated!</b> You can now grant Tusk access to each keepass file.
-        <br />Having problems?
-        <b
-          ><a href="https://github.com/subdavis/Tusk/wiki/Troubleshooting#google-drive-issues"
-            >Read the troubleshooting guide.</a
-          ></b
-        >
+        <b>{{ $t('providers.google.updateNotice') }}</b>
+        <br />{{ $t('providers.google.troubleshooting') }}
       </p>
     </div>
     <div v-show="!pickerOpen" style="margin-top: 10px">
-      <a class="btn" @click="showPicker"> Choose database file </a>
+      <a class="btn" @click="showPicker"> {{ $t('providers.google.chooseButton') }} </a>
     </div>
     <iframe
       v-show="pickerOpen"

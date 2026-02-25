@@ -137,7 +137,7 @@ export default {
         ref="searchbox"
         v-model="searchTerm"
         type="search"
-        placeholder="search entire database..."
+        :placeholder="$t('entryList.searchPlaceholder')"
       />
     </div>
     <messenger :messages="allMessages" />

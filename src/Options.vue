@@ -151,27 +151,27 @@ export default {
     this.$router.registerRoutes([
       {
         route: '/',
-        name: 'Getting Started',
+        name: this.$t('navbar.gettingStarted'),
         var: this.show.startup,
       },
       {
         route: '/manage/databases',
-        name: 'Manage Databases',
+        name: this.$t('navbar.manageDatabases'),
         var: this.show.manageDatabases,
       },
       {
         route: '/manage/keyfiles',
-        name: 'Manage Keyfiles',
+        name: this.$t('navbar.manageKeyfiles'),
         var: this.show.manageKeyfiles,
       },
       {
         route: '/advanced',
-        name: 'Advanced',
+        name: this.$t('navbar.advanced'),
         var: this.show.advanced,
       },
       {
         route: '/reauthorize/:provider',
-        name: 'Reauthorize',
+        name: this.$t('navbar.reauthorize'),
         var: this.show.reauthorize,
         hidden_from_navbar: true,
       },

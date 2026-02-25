@@ -133,63 +133,65 @@ export default {
     <div v-if="loggedIn">
       <div class="warn pill">
         <p>
-          <b>Wait! </b>Did you read the
-          <a href="https://github.com/subdavis/Tusk/wiki/WebDAV-Support">best practices guide</a>?
-          Do that first!
+          {{ $t('providers.webdav.warning') }}
         </p>
       </div>
       <div>
         <p>
-          The URL below should have the path of a FOLDER, not an individual FILE. The webDAV
-          provider works by recursively scanning all files within the folder you specify. Your
-          keepass databases will be discovered by their file extension (.kdbx).
+          {{ $t('providers.webdav.description') }}
         </p>
       </div>
       <table v-if="serverList.length">
         <tr>
-          <th>User</th>
-          <th>URL</th>
-          <th>Actions</th>
+          <th>{{ $t('providers.webdav.table.user') }}</th>
+          <th>{{ $t('providers.webdav.table.url') }}</th>
+          <th>{{ $t('providers.webdav.table.actions') }}</th>
         </tr>
         <tr v-for="(server, index) in serverList">
           <td>{{ server.username }}</td>
           <td>{{ server.url }}</td>
           <td>
             <a v-show="!server.scanBusy" class="selectable" @click="scan(server.serverId)">
-              <i class="fa fa-search" /> scan</a
+              <i class="fa fa-search" /> {{ $t('providers.webdav.scan') }}</a
             >
-            <a v-show="server.scanBusy"><i class="fa fa-spinner fa-pulse" /> scanning</a>
+            <a v-show="server.scanBusy"
+              ><i class="fa fa-spinner fa-pulse" /> {{ $t('providers.webdav.scanning') }}</a
+            >
           </td>
           <td>
             <a class="selectable" @click="remove(server.serverId)">
-              <i class="fa fa-times-circle selectable" /> remove</a
+              <i class="fa fa-times-circle selectable" /> {{ $t('providers.webdav.remove') }}</a
             >
           </td>
         </tr>
       </table>
       <div v-if="loggedIn">
-        <p><b>Add new server</b></p>
+        <p>
+          <b>{{ $t('providers.webdav.addNewServer') }}</b>
+        </p>
         <div id="webdav-server-input-box">
           <input
             id="webdav-server"
             v-model="webdav.url"
             type="text"
-            placeholder="http://server:port/remote.php/webdav/"
+            :placeholder="$t('providers.webdav.form.urlPlaceholder')"
           />
           <input
             id="webdav-username"
             v-model="webdav.username"
             type="text"
-            placeholder="Username"
+            :placeholder="$t('providers.webdav.form.usernamePlaceholder')"
           />
           <input
             id="webdav-password"
             v-model="webdav.password"
             type="password"
-            placeholder="Password"
+            :placeholder="$t('providers.webdav.form.passwordPlaceholder')"
           />
         </div>
-        <a class="waves-effect waves-light btn" @click="addServer">Add server</a>
+        <a class="waves-effect waves-light btn" @click="addServer">{{
+          $t('providers.webdav.form.addButton')
+        }}</a>
       </div>
     </div>
   </div>
