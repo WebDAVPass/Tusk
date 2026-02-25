@@ -87,7 +87,8 @@ demo*
 
 extension/dist
 extension/manifest.json
-
+.trae/
+.vscode/
 .yarn/*
 !.yarn/cache
 !.yarn/patches

@@ -11,10 +11,12 @@ export const sharedConfig: UserConfig = {
   root: r('src'),
   resolve: {
     alias: {
-      vue: '@vue/compat',
       '@': `${r('src')}/`,
       $services: `${r('services')}/`,
       '@materialize': path.resolve(__dirname, 'node_modules/@materializecss/materialize/sass'),
+      '@materializecss': path.resolve(__dirname, 'node_modules/@materializecss/materialize'),
+      // 使用 vue-i18n 运行时版本，避免 new Function()
+      'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',
     },
   },
   define: {
@@ -23,15 +25,7 @@ export const sharedConfig: UserConfig = {
     __NAME__: JSON.stringify(packageJson.name),
   },
   plugins: [
-    Vue({
-      template: {
-        compilerOptions: {
-          compatConfig: {
-            MODE: 2,
-          },
-        },
-      },
-    }),
+    Vue(),
     wasm(),
     // rewrite assets to use relative path
     {

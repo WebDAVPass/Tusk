@@ -33,6 +33,10 @@ export function createI18nInstance(locale = 'en') {
       en,
       'zh-CN': zhCN,
     },
+    // 禁用运行时编译，避免使用 new Function()
+    messageCompiler: (message) => {
+      return () => message;
+    },
   });
 
   return i18n;

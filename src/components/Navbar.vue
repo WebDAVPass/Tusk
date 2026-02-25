@@ -5,6 +5,7 @@
 -->
 <script>
 export default {
+  name: 'AppNavbar',
   props: {
     routes: Array,
     initialTab: String,
@@ -16,15 +17,15 @@ export default {
      * @returns {string} 本地化的路由名称
      */
     getRouteName(route) {
-      // 根据路由路径返回对应的本地化键
       const routeNameMap = {
-        'Getting Started': this.$t('navbar.gettingStarted'),
-        'Manage Databases': this.$t('navbar.manageDatabases'),
-        'Manage Keyfiles': this.$t('navbar.manageKeyfiles'),
-        'Advanced': this.$t('navbar.advanced'),
-        'Reauthorize': this.$t('navbar.reauthorize'),
+        gettingStarted: this.$t('navbar.gettingStarted'),
+        manageDatabases: this.$t('navbar.manageDatabases'),
+        manageKeyfiles: this.$t('navbar.manageKeyfiles'),
+        advanced: this.$t('navbar.advanced'),
+        reauthorize: this.$t('navbar.reauthorize'),
       };
-      return routeNameMap[route.name] || route.name;
+      const key = route.name ? route.name.replace(/\s+/g, '').toLowerCase() : '';
+      return routeNameMap[key] || route.name;
     },
   },
 };
