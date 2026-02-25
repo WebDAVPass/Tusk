@@ -22,7 +22,7 @@
 - [自定义字段](https://github.com/subdavis/Tusk/wiki/Custom-Fields) - Tusk 支持的自定义字段列表。
 - [警告和错误](https://github.com/subdavis/Tusk/wiki/Warnings-and-Errors) - 您可能遇到的消息的解释。
 
-#### 工作原理：实现细节
+### 工作原理：实现细节
 
 本节提供了 Tusk 内部工作原理的深入信息。我们旨在提供更好的透明度，让用户安心。Tusk 可能并不完美，但它比隐藏设计缺陷的专有黑盒应用程序要好。
 
