@@ -630,7 +630,11 @@ export default defineComponent({
 
 .databaseChoose {
   padding: 12px 16px;
-  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.05) 0%, rgba(var(--primary-rgb), 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--primary-rgb), 0.05) 0%,
+    rgba(var(--primary-rgb), 0.1) 100%
+  );
   border-radius: 10px;
   border: 1px solid rgba(var(--primary-rgb), 0.2);
   margin-bottom: 12px;
@@ -638,7 +642,11 @@ export default defineComponent({
   cursor: pointer;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(var(--primary-rgb), 0.15) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(var(--primary-rgb), 0.1) 0%,
+      rgba(var(--primary-rgb), 0.15) 100%
+    );
     box-shadow: var(--shadow-sm);
     transform: translateY(-1px);
   }

@@ -25,11 +25,11 @@ export default {
       ];
     },
     currentIcon() {
-      const theme = this.themes.find(t => t.value === this.currentTheme);
+      const theme = this.themes.find((t) => t.value === this.currentTheme);
       return theme ? theme.icon : 'fa-adjust';
     },
     currentLabel() {
-      const theme = this.themes.find(t => t.value === this.currentTheme);
+      const theme = this.themes.find((t) => t.value === this.currentTheme);
       return theme ? theme.label : this.$t('theme.auto');
     },
   },
@@ -43,9 +43,9 @@ export default {
       await themeManager.init();
       this.currentTheme = themeManager.getCurrentTheme();
     }
-    
+
     this.effectiveTheme = themeManager.getEffectiveTheme();
-    
+
     // 监听主题变化
     themeManager.onChange(this.handleThemeChange);
   },
@@ -61,7 +61,7 @@ export default {
       // 使用 themeManager.setTheme 进行验证和应用
       await themeManager.setTheme(theme);
       this.currentTheme = themeManager.getCurrentTheme();
-      
+
       // 如果有 settings，同步保存到设置
       if (this.settings) {
         await this.settings.getSetTheme(theme);
@@ -70,7 +70,7 @@ export default {
     async toggleTheme() {
       await themeManager.toggleTheme();
       this.currentTheme = themeManager.getCurrentTheme();
-      
+
       // 如果有 settings，同步保存到设置
       if (this.settings) {
         await this.settings.getSetTheme(this.currentTheme);
@@ -83,11 +83,7 @@ export default {
 <template>
   <!-- 按钮式切换 -->
   <div v-if="variant === 'button'" class="theme-toggle-button">
-    <button 
-      class="theme-btn" 
-      @click="toggleTheme"
-      :title="currentLabel"
-    >
+    <button class="theme-btn" :title="currentLabel" @click="toggleTheme">
       <i class="fa" :class="currentIcon"></i>
       <span class="theme-label">{{ currentLabel }}</span>
     </button>
@@ -100,8 +96,8 @@ export default {
       :key="theme.value"
       class="segment-btn"
       :class="{ active: currentTheme === theme.value }"
-      @click="setTheme(theme.value)"
       :title="theme.label"
+      @click="setTheme(theme.value)"
     >
       <i class="fa" :class="theme.icon"></i>
       <span>{{ theme.label }}</span>
@@ -110,16 +106,8 @@ export default {
 
   <!-- 下拉选择 -->
   <div v-else class="theme-dropdown">
-    <select 
-      class="modern-select"
-      :value="currentTheme"
-      @change="setTheme($event.target.value)"
-    >
-      <option 
-        v-for="theme in themes" 
-        :key="theme.value" 
-        :value="theme.value"
-      >
+    <select class="modern-select" :value="currentTheme" @change="setTheme($event.target.value)">
+      <option v-for="theme in themes" :key="theme.value" :value="theme.value">
         {{ theme.label }}
       </option>
     </select>

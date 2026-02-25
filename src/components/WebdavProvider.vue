@@ -105,21 +105,27 @@ export default {
       }
       if (this.loggedIn) {
         this.settings.disableDatabaseProvider(this.providerManager);
-        this.providerManager.logout().then(() => {
-          this.loggedIn = false;
-        }).catch((err) => {
-          console.error('WebDAV 登出失败:', err);
-          this.messages.error = err.toString();
-        });
+        this.providerManager
+          .logout()
+          .then(() => {
+            this.loggedIn = false;
+          })
+          .catch((err) => {
+            console.error('WebDAV 登出失败:', err);
+            this.messages.error = err.toString();
+          });
       } else {
-        this.providerManager.login().then(() => {
-          this.loggedIn = true;
-          this.onLogin();
-        }).catch((err) => {
-          console.error('WebDAV 登录失败:', err);
-          this.messages.error = err.toString();
-          this.loggedIn = false;
-        });
+        this.providerManager
+          .login()
+          .then(() => {
+            this.loggedIn = true;
+            this.onLogin();
+          })
+          .catch((err) => {
+            console.error('WebDAV 登录失败:', err);
+            this.messages.error = err.toString();
+            this.loggedIn = false;
+          });
       }
     },
     onLogin() {
@@ -241,7 +247,7 @@ export default {
   border-collapse: collapse;
   margin: 16px 0;
   font-size: 13px;
-  
+
   th {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
@@ -250,13 +256,13 @@ export default {
     text-align: left;
     border-bottom: 1px solid var(--border-color);
   }
-  
+
   td {
     padding: 10px 12px;
     border-bottom: 1px solid var(--border-light);
     color: var(--text-primary);
   }
-  
+
   tr:hover {
     background-color: var(--bg-secondary);
   }
@@ -264,7 +270,7 @@ export default {
 
 .webdav-add-server {
   margin-top: 16px;
-  
+
   p {
     margin-bottom: 12px;
     color: var(--text-primary);
@@ -297,7 +303,7 @@ export default {
       width: 100%;
       flex-basis: 100%;
     }
-    
+
     &#webdav-username,
     &#webdav-password {
       flex: 1;
@@ -312,7 +318,7 @@ export default {
   padding: 10px 14px;
   border-radius: 8px;
   margin-bottom: 12px;
-  
+
   p {
     margin: 0;
     font-weight: 500;
@@ -324,7 +330,7 @@ export default {
   cursor: pointer;
   color: var(--primary-color);
   transition: color 0.2s ease;
-  
+
   &:hover {
     color: var(--primary-dark);
   }

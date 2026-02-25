@@ -52,7 +52,7 @@ export default {
     providerIcon() {
       if (!this.providerManager || !this.providerManager.icon) return '';
       return this.providerManager.icon;
-    }
+    },
   },
 };
 </script>
@@ -76,7 +76,7 @@ export default {
         </label>
       </div>
     </div>
-    
+
     <div class="provider-databases">
       <span v-for="(db, index) in databases" :key="index" class="modern-chip">
         {{ db.title }}
@@ -88,11 +88,11 @@ export default {
         />
       </span>
     </div>
-    
+
     <div class="provider-description">
       {{ providerDescription }}
     </div>
-    
+
     <slot></slot>
   </div>
 </template>
@@ -170,7 +170,9 @@ export default {
 
       &:checked + .modern-switch-slider {
         background: linear-gradient(135deg, var(--success-color) 0%, var(--success-light) 100%);
-        box-shadow: var(--shadow-md), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        box-shadow:
+          var(--shadow-md),
+          inset 0 1px 2px rgba(255, 255, 255, 0.2);
 
         &::before {
           transform: translateX(20px);
@@ -179,7 +181,9 @@ export default {
       }
 
       &:focus + .modern-switch-slider {
-        box-shadow: var(--shadow-md), 0 0 0 3px rgba(var(--success-rgb, 76, 175, 80), 0.2);
+        box-shadow:
+          var(--shadow-md),
+          0 0 0 3px rgba(var(--success-rgb, 76, 175, 80), 0.2);
       }
 
       &:disabled + .modern-switch-slider {

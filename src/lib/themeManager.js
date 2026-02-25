@@ -13,7 +13,7 @@ class ThemeManager {
     this.currentTheme = THEME_AUTO;
     this.mediaQuery = null;
     this.callbacks = [];
-    
+
     // 初始化媒体查询监听器
     if (typeof window !== 'undefined') {
       this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -60,12 +60,12 @@ class ThemeManager {
    */
   applyTheme(theme) {
     this.currentTheme = theme;
-    
+
     const root = document.documentElement;
-    
+
     // 移除所有主题属性
     root.removeAttribute('data-theme');
-    
+
     if (theme === THEME_AUTO) {
       // 自动模式：使用媒体查询
       root.setAttribute('data-theme', 'auto');
@@ -90,7 +90,7 @@ class ThemeManager {
       console.warn('Invalid theme:', theme);
       return;
     }
-    
+
     await this.saveTheme(theme);
     this.applyTheme(theme);
   }
@@ -158,7 +158,7 @@ class ThemeManager {
    */
   notifyCallbacks() {
     const effectiveTheme = this.getEffectiveTheme();
-    this.callbacks.forEach(callback => {
+    this.callbacks.forEach((callback) => {
       try {
         callback(this.currentTheme, effectiveTheme);
       } catch (e) {

@@ -11,47 +11,47 @@ export default {
   props: {
     size: {
       type: [String, Number],
-      default: 32
+      default: 32,
     },
     lineSize: {
       type: Number,
-      default: 3
+      default: 3,
     },
     lineBgColor: {
       type: String,
-      default: '#eee'
+      default: '#eee',
     },
     lineFgColor: {
       type: String,
-      default: '#2196f3'
+      default: '#2196f3',
     },
     speed: {
       type: Number,
-      default: 0.8
+      default: 0.8,
     },
     message: {
       type: String,
-      default: ''
+      default: '',
     },
     fontSize: {
       type: Number,
-      default: 13
+      default: 13,
     },
     textFgColor: {
       type: String,
-      default: '#555'
-    }
+      default: '#555',
+    },
   },
   computed: {
     sizePx() {
       const sizeMap = {
-        'tiny': 12,
-        'small': 16,
-        'medium': 32,
-        'large': 48,
-        'big': 64,
-        'huge': 96,
-        'massive': 128
+        tiny: 12,
+        small: 16,
+        medium: 32,
+        large: 48,
+        big: 64,
+        huge: 96,
+        massive: 128,
       };
       if (typeof this.size === 'string' && sizeMap[this.size]) {
         return sizeMap[this.size];
@@ -60,13 +60,13 @@ export default {
     },
     lineSizePx() {
       const lineSizeMap = {
-        'tiny': 1,
-        'small': 2,
-        'medium': 3,
-        'large': 3,
-        'big': 4,
-        'huge': 4,
-        'massive': 5
+        tiny: 1,
+        small: 2,
+        medium: 3,
+        large: 3,
+        big: 4,
+        huge: 4,
+        massive: 5,
       };
       if (typeof this.size === 'string' && lineSizeMap[this.size]) {
         return lineSizeMap[this.size];
@@ -81,7 +81,7 @@ export default {
         borderTop: `${this.lineSizePx}px solid ${this.lineFgColor}`,
         width: `${this.sizePx}px`,
         height: `${this.sizePx}px`,
-        animation: `spinner-spin ${this.speed}s linear infinite`
+        animation: `spinner-spin ${this.speed}s linear infinite`,
       };
     },
     textStyle() {
@@ -91,10 +91,10 @@ export default {
         marginTop: `${textMarginTop}px`,
         color: this.textFgColor,
         fontSize: `${this.fontSize || textFontSize}px`,
-        textAlign: 'center'
+        textAlign: 'center',
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

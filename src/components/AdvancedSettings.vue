@@ -135,12 +135,12 @@ export default {
       this.settings.getSetLocale().then((val) => {
         this.selectedLocale = val || 'en';
       });
-      
+
       // 加载主题设置
       const savedTheme = await this.settings.getSetTheme();
       this.selectedTheme = savedTheme;
       themeManager.applyTheme(savedTheme);
-      
+
       if (!isFirefox()) {
         const rawPerms = toRaw(this.allOriginPerms);
         chrome.permissions.contains(rawPerms, (granted) => {
@@ -214,7 +214,9 @@ export default {
         <label class="modern-switch">
           <input v-model="hotkeyNavEnabled" type="checkbox" />
           <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{ $t('advancedSettings.hotkeyNavigation.label') }}</span>
+          <span class="modern-switch-label">{{
+            $t('advancedSettings.hotkeyNavigation.label')
+          }}</span>
         </label>
       </div>
     </div>
@@ -224,7 +226,9 @@ export default {
       <div class="settings-header">
         <h4>{{ $t('advancedSettings.allOriginPermission.title') }}</h4>
         <p>
-          <strong class="warning-text">{{ $t('advancedSettings.allOriginPermission.warning') }}</strong>
+          <strong class="warning-text">{{
+            $t('advancedSettings.allOriginPermission.warning')
+          }}</strong>
           {{ $t('advancedSettings.allOriginPermission.description') }}
         </p>
       </div>
@@ -232,7 +236,9 @@ export default {
         <label class="modern-switch">
           <input v-model="allOriginPermission" type="checkbox" @click="toggleOriginPermissions" />
           <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{ $t('advancedSettings.allOriginPermission.label') }}</span>
+          <span class="modern-switch-label">{{
+            $t('advancedSettings.allOriginPermission.label')
+          }}</span>
         </label>
       </div>
     </div>
@@ -247,12 +253,16 @@ export default {
         <label class="modern-switch">
           <input v-model="notificationsEnabled" type="checkbox" value="expiration" />
           <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{ $t('advancedSettings.notifications.passwordExpiration') }}</span>
+          <span class="modern-switch-label">{{
+            $t('advancedSettings.notifications.passwordExpiration')
+          }}</span>
         </label>
         <label class="modern-switch">
           <input v-model="notificationsEnabled" type="checkbox" value="clipboard" />
           <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{ $t('advancedSettings.notifications.clipboardEvents') }}</span>
+          <span class="modern-switch-label">{{
+            $t('advancedSettings.notifications.clipboardEvents')
+          }}</span>
         </label>
       </div>
     </div>
@@ -363,10 +373,14 @@ export default {
 
   &.warning-card {
     border: 1px solid rgba(255, 152, 0, 0.3);
-    box-shadow: var(--shadow-md), 0 0 0 1px rgba(255, 152, 0, 0.1);
+    box-shadow:
+      var(--shadow-md),
+      0 0 0 1px rgba(255, 152, 0, 0.1);
 
     &:hover {
-      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 152, 0, 0.2);
+      box-shadow:
+        var(--shadow-lg),
+        0 0 0 1px rgba(255, 152, 0, 0.2);
     }
   }
 
@@ -426,7 +440,9 @@ export default {
 
       &:checked + .modern-switch-slider {
         background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        box-shadow: var(--shadow-md), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+        box-shadow:
+          var(--shadow-md),
+          inset 0 1px 2px rgba(255, 255, 255, 0.2);
 
         &::before {
           transform: translateX(20px);
@@ -435,7 +451,9 @@ export default {
       }
 
       &:focus + .modern-switch-slider {
-        box-shadow: var(--shadow-md), 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+        box-shadow:
+          var(--shadow-md),
+          0 0 0 3px rgba(var(--primary-rgb), 0.2);
       }
     }
 
@@ -531,18 +549,24 @@ export default {
 
     &:focus {
       outline: none;
-      box-shadow: var(--shadow-md), 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+      box-shadow:
+        var(--shadow-md),
+        0 0 0 3px rgba(var(--primary-rgb), 0.3);
     }
 
     &.danger {
       background: linear-gradient(135deg, var(--error-color) 0%, var(--error-light) 100%);
 
       &:hover {
-        box-shadow: var(--shadow-lg), 0 10px 15px -3px rgba(244, 67, 54, 0.3);
+        box-shadow:
+          var(--shadow-lg),
+          0 10px 15px -3px rgba(244, 67, 54, 0.3);
       }
 
       &:focus {
-        box-shadow: var(--shadow-md), 0 0 0 3px rgba(244, 67, 54, 0.3);
+        box-shadow:
+          var(--shadow-md),
+          0 0 0 3px rgba(244, 67, 54, 0.3);
       }
     }
 
