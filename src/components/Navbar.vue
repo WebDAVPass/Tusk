@@ -55,8 +55,11 @@ nav {
   box-shadow: var(--shadow-md);
 
   .nav-content {
-    width: 800px;
+    max-width: 700px;
+    width: 100%;
     margin: 0px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
 
     li.active {
       border-bottom: 3px solid var(--text-inverse);

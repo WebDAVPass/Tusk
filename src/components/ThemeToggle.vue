@@ -14,14 +14,16 @@ export default {
     return {
       currentTheme: THEME_AUTO,
       effectiveTheme: THEME_LIGHT,
-      themes: [
-        { value: THEME_AUTO, icon: 'fa-adjust', label: this.$t('theme.auto') },
-        { value: THEME_LIGHT, icon: 'fa-sun-o', label: this.$t('theme.light') },
-        { value: THEME_DARK, icon: 'fa-moon-o', label: this.$t('theme.dark') },
-      ],
     };
   },
   computed: {
+    themes() {
+      return [
+        { value: THEME_AUTO, icon: 'fa-adjust', label: this.$t('theme.auto') },
+        { value: THEME_LIGHT, icon: 'fa-sun-o', label: this.$t('theme.light') },
+        { value: THEME_DARK, icon: 'fa-moon-o', label: this.$t('theme.dark') },
+      ];
+    },
     currentIcon() {
       const theme = this.themes.find(t => t.value === this.currentTheme);
       return theme ? theme.icon : 'fa-adjust';
@@ -56,23 +58,22 @@ export default {
       this.effectiveTheme = effectiveTheme;
     },
     async setTheme(theme) {
-      this.currentTheme = theme;
-      themeManager.applyTheme(theme);
+      // 使用 themeManager.setTheme 进行验证和应用
+      await themeManager.setTheme(theme);
+      this.currentTheme = themeManager.getCurrentTheme();
       
-      // 保存到设置
+      // 如果有 settings，同步保存到设置
       if (this.settings) {
         await this.settings.getSetTheme(theme);
-      } else {
-        await themeManager.saveTheme(theme);
       }
     },
     async toggleTheme() {
       await themeManager.toggleTheme();
-      const newTheme = themeManager.getCurrentTheme();
+      this.currentTheme = themeManager.getCurrentTheme();
       
-      // 保存到设置
+      // 如果有 settings，同步保存到设置
       if (this.settings) {
-        await this.settings.getSetTheme(newTheme);
+        await this.settings.getSetTheme(this.currentTheme);
       }
     },
   },
