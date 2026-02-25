@@ -46,23 +46,6 @@ const baseManifest: Manifest.WebExtensionManifest = {
     page: './dist/options.html',
     open_in_tab: true,
   },
-
-  // @ts-expect-error This is additional manifest data
-  static_data: {
-    dropbox: {
-      client_id: 'lau0eigo4cfthqz',
-    },
-    onedrive: {
-      client_id: 'f4c55645-3f43-4f8e-a7d2-ec167b416f1d',
-    },
-    gdrive: {
-      // The Web Client ID for general use
-      client_id: '876467817034-rlas0hnb5jc9dt1qmp11l6g4724ktoqn.apps.googleusercontent.com',
-    },
-    pcloud: {
-      client_id: '1NklWhTApYR',
-    },
-  },
 };
 
 /**
