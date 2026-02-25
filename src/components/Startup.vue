@@ -60,20 +60,17 @@ export default {
       <div class="box-bar plain">
         <div class="unlockLogo stack-item">
           <img src="@/assets/icons/exported/128x128.svg" />
-          <span>KeePass Tusk</span>
+          <span>{{ $t('startup.title') }}</span>
         </div>
-        <p>
-          Tusk is an extension that uses your existing KeePass database files to autofill passwords
-          on websites. In order to continue, you must add your KeePass database file(s).
-        </p>
+        <p>{{ $t('startup.description') }}</p>
       </div>
       <div class="stack-item selectable">
         <button class="action-button selectable" @click="links.openOptions">
-          Add a KeePass database file
+          {{ $t('startup.addDatabase') }}
         </button>
       </div>
       <div class="box-bar plain">
-        <p>You can return here when you've enabled one of the database file providers.</p>
+        <p>{{ $t('startup.returnHint') }}</p>
       </div>
     </div>
   </div>

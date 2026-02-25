@@ -34,6 +34,7 @@
     "kdbxweb": "^2.1.1",
     "pako": "^1.0.6",
     "vue": "3",
+    "vue-i18n": "^9.14.4",
     "vue-simple-spinner": "^1.2.10",
     "webdav": "^5.8.0",
     "webextension-polyfill": "^0.12.0"

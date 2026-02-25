@@ -302,6 +302,10 @@ function Settings(secureCache) {
     return keyGetSetter('originPermissionsEnabled', enabled, false, 'boolean');
   };
 
+  exports.getSetLocale = function (locale) {
+    return keyGetSetter('locale', locale, 'en', 'string');
+  };
+
   return exports;
 }
 

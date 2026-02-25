@@ -48,31 +48,31 @@ export default defineComponent({
       slider_options: [
         {
           time: 0,
-          text: 'Do not remember',
+          text: this.$t('unlock.rememberPeriod.doNotRemember'),
         },
         {
           time: 30,
-          text: 'Remember for 30 min.',
+          text: this.$t('unlock.rememberPeriod.minutes30'),
         },
         {
           time: 120,
-          text: 'Remember for 2 hours.',
+          text: this.$t('unlock.rememberPeriod.hours2'),
         },
         {
           time: 240,
-          text: 'Remember for 4 hours.',
+          text: this.$t('unlock.rememberPeriod.hours4'),
         },
         {
           time: 480,
-          text: 'Remember for 8 hours.',
+          text: this.$t('unlock.rememberPeriod.hours8'),
         },
         {
           time: 1440,
-          text: 'Remember for 24 hours.',
+          text: this.$t('unlock.rememberPeriod.hours24'),
         },
         {
           time: -1,
-          text: 'Until browser exits.',
+          text: this.$t('unlock.rememberPeriod.untilExit'),
         },
       ],
       slider_int: 0,
@@ -84,7 +84,7 @@ export default defineComponent({
     },
     selectedKeyFileName: function () {
       if (this.selectedKeyFile !== undefined) return this.selectedKeyFile.name;
-      return 'No keyfile selected.  (click to change)';
+      return this.$t('unlock.noKeyfileSelected');
     },
   },
   watch: {
@@ -159,12 +159,11 @@ export default defineComponent({
       focus();
     }
     if (this.unlockedState.sitePermission) {
-      this.generalMessages.success =
-        'You have previously granted Tusk permission to fill passwords on ' +
-        this.unlockedState.origin;
+      this.generalMessages.success = this.$t('unlock.warnings.permissionGranted', {
+        origin: this.unlockedState.origin,
+      });
     } else {
-      this.generalMessages.warn =
-        'This may be a new site to Tusk. Before filling in a password, double check that this is the correct site.';
+      this.generalMessages.warn = this.$t('unlock.warnings.newSite');
     }
     //set knowlege from the URL
     this.databaseFileName = decodeURIComponent(this.$router.getRoute().title);
@@ -233,8 +232,9 @@ export default defineComponent({
 
           // in strict mode, good matches are considered partial matches.
           if (strictMode && priorityEntries.length) {
-            this.unlockedMessages['warn'] =
-              'No perfect origin matches, showing ' + priorityEntries.length + ' partial matches.';
+            this.unlockedMessages['warn'] = this.$t('entryList.noPerfectMatches', {
+              count: priorityEntries.length,
+            });
           }
         }
         if (!strictMode && priorityEntries.length == 0) {
@@ -244,12 +244,13 @@ export default defineComponent({
           priorityEntries = getMatchesForThreshold(0.4, entries);
 
           if (priorityEntries.length) {
-            this.unlockedMessages.warn =
-              'No close matches, showing ' + priorityEntries.length + ' partial matches.';
+            this.unlockedMessages.warn = this.$t('entryList.noCloseMatches', {
+              count: priorityEntries.length,
+            });
           }
         }
         if (priorityEntries.length == 0) {
-          this.unlockedMessages.warn = 'No matches found for this site.';
+          this.unlockedMessages.warn = this.$t('entryList.noMatches');
         }
 
         // Cache in memory
@@ -316,7 +317,7 @@ export default defineComponent({
         })
         .catch((err) => {
           console.error(err);
-          this.generalMessages['error'] = err.message || 'invalid keyfile or KDBX file';
+          this.generalMessages['error'] = err.message || this.$t('unlock.errors.invalidKeyfileOrDatabase');
           this.busy = false;
           throw err;
         });
@@ -329,7 +330,7 @@ export default defineComponent({
   <div>
     <!-- Busy Spinner -->
     <div v-if="busy" class="spinner">
-      <spinner size="medium" :message="'Unlocking ' + databaseFileName" />
+      <spinner size="medium" :message="$t('unlock.unlocking', { name: databaseFileName })" />
     </div>
 
     <!-- Entry List -->
@@ -347,12 +348,12 @@ export default defineComponent({
     <div v-if="!busy && !isUnlocked" id="masterPasswordGroup">
       <div class="unlockLogo stack-item">
         <img src="/assets/icons/exported/128x128.svg" width="256px" height="256px" />
-        <span>KeePass Tusk</span>
+        <span>{{ $t('unlock.title') }}</span>
       </div>
 
       <form @submit="clickUnlock">
         <div class="small selectable databaseChoose" @click="$router.route('/choose')">
-          <b>{{ databaseFileName }}</b> <span class="muted-color">change...</span>
+          <b>{{ databaseFileName }}</b> <span class="muted-color">{{ $t('unlock.changeDatabase') }}</span>
         </div>
 
         <div class="stack-item masterPasswordInput">
@@ -361,7 +362,7 @@ export default defineComponent({
             ref="masterPassword"
             v-model="masterPassword"
             :type="isMasterPasswordInputVisible ? 'text' : 'password'"
-            placeholder="🔒 master password"
+            :placeholder="$t('unlock.masterPasswordPlaceholder')"
             autocomplete="off"
           />
           <i
@@ -396,7 +397,7 @@ export default defineComponent({
                 <i class="fa fa-file fa-fw" aria-hidden="true" /> {{ kf.name }}
               </span>
               <span class="selectable" @click="links.openOptionsKeyfiles">
-                <i class="fa fa-wrench fa-fw" aria-hidden="true" /> Manage Keyfiles</span
+                <i class="fa fa-wrench fa-fw" aria-hidden="true" /> {{ $t('unlock.manageKeyfiles') }}</span
               >
             </div>
           </transition>
@@ -405,7 +406,7 @@ export default defineComponent({
         <div class="box-bar small plain remember-period-picker">
           <span>
             <label for="rememberPeriodLength">
-              <span>{{ rememberPeriodText }} (slide to choose)</span>
+              <span>{{ rememberPeriodText }} {{ $t('unlock.rememberPeriodHint') }}</span>
             </label>
             <input
               id="rememberPeriodLength"
@@ -420,7 +421,7 @@ export default defineComponent({
         </div>
 
         <div class="stack-item">
-          <button class="action-button selectable" @click="clickUnlock">Unlock Database</button>
+          <button class="action-button selectable" @click="clickUnlock">{{ $t('unlock.unlockDatabase') }}</button>
         </div>
       </form>
     </div>
@@ -428,13 +429,13 @@ export default defineComponent({
     <!-- Footer -->
     <div v-show="!busy" class="box-bar medium between footer">
       <span class="selectable" @click="links.openOptions">
-        <i class="fa fa-cog" aria-hidden="true" /> Settings</span
+        <i class="fa fa-cog" aria-hidden="true" /> {{ $t('common.settings') }}</span
       >
       <span v-if="isUnlocked" class="selectable" @click="forgetPassword">
-        <i class="fa fa-lock" aria-hidden="true" /> Lock Database</span
+        <i class="fa fa-lock" aria-hidden="true" /> {{ $t('unlock.lockDatabase') }}</span
       >
       <span v-else class="selectable" @click="closeWindow">
-        <i class="fa fa-times-circle" aria-hidden="true" /> Close Window</span
+        <i class="fa fa-times-circle" aria-hidden="true" /> {{ $t('unlock.closeWindow') }}</span
       >
       <span class="selectable" @click="links.openHomepage">
         <i class="fa fa-info-circle" aria-hidden="true" /> v{{ appVersion }}</span

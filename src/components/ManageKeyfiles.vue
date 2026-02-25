@@ -57,21 +57,16 @@ export default {
   <div id="key-file-manager">
     <div class="box-bar about roomy">
       <p>
-        Key files are an
-        <b>optional authentication method</b>. More info on key files is available on the
+        {{ $t('manageKeyfiles.description') }}
         <a href="http://keepass.info/help/base/keys.html#keyfiles" target="_blank">
           KeePass site
         </a>
       </p>
       <p>
-        Tusk can store your key files locally in your browser's storage, and apply them when opening
-        your password database. Websites and other browser extensions do not have access to these
-        files. However, they are
-        <b>stored unencrypted</b> in your local browser profile and someone with access to your
-        device could read them.
+        {{ $t('manageKeyfiles.warning') }}
       </p>
       <input id="file" multiple type="file" style="display: none" name="file" @change="handleAdd" />
-      <a class="waves-effect waves-light btn" @click="selectFileInput">Add Key File</a>
+      <a class="waves-effect waves-light btn" @click="selectFileInput">{{ $t('manageKeyfiles.addKeyFile') }}</a>
       <p v-if="errorMessage" class="box-bar error white-text">
         {{ errorMessage }}
       </p>
