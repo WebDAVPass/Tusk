@@ -11,20 +11,23 @@ import { createI18nInstance, getLocaleFromSettings } from '@/locales/index.js';
 import { Settings } from '$services/settings.js';
 import { ProtectedMemory } from '$services/protectedMemory';
 import { SecureCacheMemory } from '$services/secureCacheMemory.js';
-
-document.documentElement.setAttribute('theme', 'light');
+import { themeManager } from '@/lib/themeManager.js';
 
 /**
  * 初始化应用
  */
 async function initApp() {
-  // 创建设置实例以获取语言设置
+  // 创建设置实例以获取语言和主题设置
   const protectedMemory = new ProtectedMemory();
   const secureCache = new SecureCacheMemory(protectedMemory);
   const settings = new Settings(secureCache);
 
   // 获取语言设置
   const locale = await getLocaleFromSettings(settings);
+
+  // 获取并应用主题设置
+  const savedTheme = await settings.getSetTheme();
+  themeManager.applyTheme(savedTheme);
 
   // 创建 i18n 实例
   const i18n = createI18nInstance(locale);

@@ -74,7 +74,7 @@ export default {
   padding: 10px $wall-padding;
   box-sizing: border-box;
   border-bottom: 1px solid $light-gray;
-  background-color: #fff;
+  background-color: var(--bg-primary);
   display: flex;
   .header {
     font-size: 16px;

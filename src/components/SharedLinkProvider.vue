@@ -29,9 +29,11 @@ export default {
     };
   },
   mounted() {
-    this.providerManager.isLoggedIn().then((loggedIn) => {
-      this.loggedIn = loggedIn;
-    });
+    if (this.providerManager && this.providerManager.isLoggedIn) {
+      this.providerManager.isLoggedIn().then((loggedIn) => {
+        this.loggedIn = loggedIn;
+      });
+    }
     this.updateLinks();
   },
   methods: {

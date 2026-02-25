@@ -47,19 +47,37 @@ export default {
 </template>
 
 <style lang="scss">
-@import '../styles/settings.scss';
-
 nav {
   position: fixed;
   top: 0px;
   z-index: 100;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  box-shadow: var(--shadow-md);
 
   .nav-content {
-    width: $options-width;
+    max-width: 700px;
+    width: 100%;
     margin: 0px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
 
     li.active {
-      border-bottom: 3px solid $background-color;
+      border-bottom: 3px solid var(--text-inverse);
+    }
+
+    li a {
+      color: var(--text-inverse);
+      opacity: 0.8;
+      transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    li.active a {
+      opacity: 1;
+      font-weight: 600;
     }
   }
 }

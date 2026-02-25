@@ -138,7 +138,7 @@ export default {
           visible: false,
         },
         advanced: {
-          visble: false,
+          visible: false,
         },
         reauthorize: {
           visible: false,
@@ -187,18 +187,26 @@ export default {
 <style lang="scss">
 @import './styles/options.scss';
 
+#popup-view {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
 body {
-  background-color: $background-color;
+  background-color: var(--bg-primary);
 }
 
 #overflowbox {
   overflow-y: auto;
   margin-top: 60px;
+  background-color: var(--bg-primary);
+  min-height: calc(100vh - 60px);
 }
 
 #contentbox {
   margin: 0px auto;
   width: $options-width;
-  /* height: 490px; */
+  background-color: var(--bg-primary);
+  padding: 20px 0;
 }
 </style>

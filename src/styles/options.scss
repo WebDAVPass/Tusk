@@ -6,64 +6,28 @@
 @import '@materialize/components/_chips.scss';
 @import '@materialize/components/_buttons.scss';
 
+// 覆盖Materialize的导航栏背景
 nav {
-  background-color: $blue;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  box-shadow: var(--shadow-md);
 }
 
-.content-body {
-  padding: 0px $options-wall-padding;
+// 内容区域
+#overflowbox {
+  overflow-y: auto;
+  margin-top: 60px;
+  background-color: var(--bg-primary);
+  min-height: calc(100vh - 60px);
 }
 
-p {
-  font-size: 14px;
+#contentbox {
+  margin: 0px auto;
+  width: $options-width;
+  padding: 20px 0;
+  background-color: var(--bg-primary);
 }
 
-a.btn {
-  background-color: $blue;
-  color: $background-color;
-
-  &:hover {
-    background-color: $blue;
-    opacity: 0.7;
-  }
-}
-
-h3 {
-  margin: 1.6rem 0 0.8rem 0;
-}
-
-.switch label input[type='checkbox']:checked + .lever {
-  background-color: $green;
-
-  &:after {
-    background-color: $light-green;
-  }
-}
-
-.database-manager {
-  background-color: $light-background-color;
-
-  .error {
-    font-size: 12px;
-  }
-
-  svg {
-    width: 18px;
-    vertical-align: middle;
-  }
-
-  .chip {
-    height: 24px;
-    line-height: 24px;
-    font-size: 11px;
-    margin-right: 4px;
-  }
-
-  .description {
-    font-size: 12px;
-  }
-
-  .between {
-    line-height: 36px;
-  }
+// 选项页面body背景
+body {
+  background-color: var(--bg-primary);
 }

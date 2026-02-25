@@ -28,12 +28,16 @@ export default {
     };
   },
   mounted() {
-    this.providerManager.isLoggedIn().then((loggedIn) => {
-      this.loggedIn = loggedIn;
-    });
-    this.providerManager.listDatabases().then((databases) => {
-      if (databases !== false) this.databases = databases;
-    });
+    if (this.providerManager && this.providerManager.isLoggedIn) {
+      this.providerManager.isLoggedIn().then((loggedIn) => {
+        this.loggedIn = loggedIn;
+      });
+    }
+    if (this.providerManager && this.providerManager.listDatabases) {
+      this.providerManager.listDatabases().then((databases) => {
+        if (databases !== false) this.databases = databases;
+      });
+    }
   },
   methods: {
     toggleLogin(e) {

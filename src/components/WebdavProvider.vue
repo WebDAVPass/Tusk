@@ -34,10 +34,12 @@ export default {
     };
   },
   mounted() {
-    this.providerManager.isLoggedIn().then((loggedIn) => {
-      this.loggedIn = loggedIn;
-      if (loggedIn) this.onLogin();
-    });
+    if (this.providerManager && this.providerManager.isLoggedIn) {
+      this.providerManager.isLoggedIn().then((loggedIn) => {
+        this.loggedIn = loggedIn;
+        if (loggedIn) this.onLogin();
+      });
+    }
   },
   methods: {
     addServer() {
@@ -96,16 +98,34 @@ export default {
       });
     },
     toggleLogin() {
+      if (!this.providerManager) {
+        console.error('WebDAV providerManager is undefined');
+        this.messages.error = 'WebDAV providerManager not available';
+        return;
+      }
       if (this.loggedIn) {
         this.settings.disableDatabaseProvider(this.providerManager);
-        this.providerManager.logout().then(() => {
-          this.loggedIn = false;
-        });
+        this.providerManager
+          .logout()
+          .then(() => {
+            this.loggedIn = false;
+          })
+          .catch((err) => {
+            console.error('WebDAV 登出失败:', err);
+            this.messages.error = err.toString();
+          });
       } else {
-        this.providerManager.login().then(() => {
-          this.loggedIn = true;
-          this.onLogin();
-        });
+        this.providerManager
+          .login()
+          .then(() => {
+            this.loggedIn = true;
+            this.onLogin();
+          })
+          .catch((err) => {
+            console.error('WebDAV 登录失败:', err);
+            this.messages.error = err.toString();
+            this.loggedIn = false;
+          });
       }
     },
     onLogin() {
@@ -120,7 +140,7 @@ export default {
 </script>
 
 <template>
-  <div class="box-bar roomy database-manager">
+  <div class="webdav-provider-wrapper">
     <generic-provider-ui
       :busy="busy"
       :databases="databases"
@@ -129,115 +149,190 @@ export default {
       :provider-manager="providerManager"
       :toggle-login="toggleLogin"
       :removeable="false"
-    />
-    <div v-if="loggedIn">
-      <div class="warn pill">
-        <p>
-          {{ $t('providers.webdav.warning') }}
-        </p>
-      </div>
-      <div>
-        <p>
-          {{ $t('providers.webdav.description') }}
-        </p>
-      </div>
-      <table v-if="serverList.length">
-        <tr>
-          <th>{{ $t('providers.webdav.table.user') }}</th>
-          <th>{{ $t('providers.webdav.table.url') }}</th>
-          <th>{{ $t('providers.webdav.table.actions') }}</th>
-        </tr>
-        <tr v-for="(server, index) in serverList">
-          <td>{{ server.username }}</td>
-          <td>{{ server.url }}</td>
-          <td>
-            <a v-show="!server.scanBusy" class="selectable" @click="scan(server.serverId)">
-              <i class="fa fa-search" /> {{ $t('providers.webdav.scan') }}</a
-            >
-            <a v-show="server.scanBusy"
-              ><i class="fa fa-spinner fa-pulse" /> {{ $t('providers.webdav.scanning') }}</a
-            >
-          </td>
-          <td>
-            <a class="selectable" @click="remove(server.serverId)">
-              <i class="fa fa-times-circle selectable" /> {{ $t('providers.webdav.remove') }}</a
-            >
-          </td>
-        </tr>
-      </table>
-      <div v-if="loggedIn">
-        <p>
-          <b>{{ $t('providers.webdav.addNewServer') }}</b>
-        </p>
-        <div id="webdav-server-input-box">
-          <input
-            id="webdav-server"
-            v-model="webdav.url"
-            type="text"
-            :placeholder="$t('providers.webdav.form.urlPlaceholder')"
-          />
-          <input
-            id="webdav-username"
-            v-model="webdav.username"
-            type="text"
-            :placeholder="$t('providers.webdav.form.usernamePlaceholder')"
-          />
-          <input
-            id="webdav-password"
-            v-model="webdav.password"
-            type="password"
-            :placeholder="$t('providers.webdav.form.passwordPlaceholder')"
-          />
+    >
+      <div v-if="loggedIn" class="webdav-config-section">
+        <div class="warn pill">
+          <p>
+            {{ $t('providers.webdav.warning') }}
+          </p>
         </div>
-        <a class="waves-effect waves-light btn" @click="addServer">{{
-          $t('providers.webdav.form.addButton')
-        }}</a>
+        <div class="webdav-description">
+          <p>
+            {{ $t('providers.webdav.descriptionDetail') }}
+          </p>
+        </div>
+        <table v-if="serverList.length" class="webdav-server-table">
+          <thead>
+            <tr>
+              <th>{{ $t('providers.webdav.table.user') }}</th>
+              <th>{{ $t('providers.webdav.table.url') }}</th>
+              <th>{{ $t('providers.webdav.table.actions') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(server, index) in serverList" :key="server.serverId || index">
+              <td>{{ server.username }}</td>
+              <td>{{ server.url }}</td>
+              <td>
+                <a v-show="!server.scanBusy" class="selectable" @click="scan(server.serverId)">
+                  <i class="fa fa-search" /> {{ $t('providers.webdav.scan') }}</a
+                >
+                <a v-show="server.scanBusy"
+                  ><i class="fa fa-spinner fa-pulse" /> {{ $t('providers.webdav.scanning') }}</a
+                >
+              </td>
+              <td>
+                <a class="selectable" @click="remove(server.serverId)">
+                  <i class="fa fa-times-circle selectable" /> {{ $t('providers.webdav.remove') }}</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="webdav-add-server">
+          <p>
+            <b>{{ $t('providers.webdav.addNewServer') }}</b>
+          </p>
+          <div class="webdav-server-input-box">
+            <input
+              id="webdav-server"
+              v-model="webdav.url"
+              type="text"
+              :placeholder="$t('providers.webdav.form.urlPlaceholder')"
+            />
+            <input
+              id="webdav-username"
+              v-model="webdav.username"
+              type="text"
+              :placeholder="$t('providers.webdav.form.usernamePlaceholder')"
+            />
+            <input
+              id="webdav-password"
+              v-model="webdav.password"
+              type="password"
+              :placeholder="$t('providers.webdav.form.passwordPlaceholder')"
+            />
+          </div>
+          <a class="waves-effect waves-light btn" @click="addServer">{{
+            $t('providers.webdav.form.addButton')
+          }}</a>
+        </div>
       </div>
-    </div>
+    </generic-provider-ui>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import '../styles/settings.scss';
 
-#webdav-server-input-box {
+.webdav-provider-wrapper {
+  margin-bottom: 16px;
+}
+
+.webdav-config-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.webdav-description {
+  margin: 12px 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.webdav-server-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+
+  th {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-primary);
+  }
+
+  tr:hover {
+    background-color: var(--bg-secondary);
+  }
+}
+
+.webdav-add-server {
+  margin-top: 16px;
+
+  p {
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+}
+
+.webdav-server-input-box {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  box-sizing: border-box;
+  gap: 8px;
+  margin-bottom: 12px;
 
   input {
-    padding: 4px;
-    margin: 0px 8px 8px 0px;
+    padding: 8px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 13px;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--input-border-focus);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    }
 
     &#webdav-server {
       width: 100%;
+      flex-basis: 100%;
     }
+
     &#webdav-username,
     &#webdav-password {
       flex: 1;
+      min-width: 150px;
     }
   }
 }
 
-table {
-  font-size: 14px;
-  td {
-    padding: 5px 5px;
-    border-radius: 0px;
-  }
-  th {
-    background-color: $light-background-color;
-  }
-  tr {
-    background-color: $background-color;
+.warn {
+  background: linear-gradient(135deg, var(--warning-color) 0%, var(--warning-light) 100%);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+
+  p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 13px;
   }
 }
 
-.warning-box {
-  border: 3px solid red;
-  p {
-    margin: 4px;
+.selectable {
+  cursor: pointer;
+  color: var(--primary-color);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--primary-dark);
   }
 }
 </style>

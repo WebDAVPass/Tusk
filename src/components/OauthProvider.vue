@@ -36,21 +36,29 @@ export default {
   methods: {
     populate() {
       // TODO: deal with the race condition here....
+      if (!this.providerManager) {
+        this.busy = false;
+        return;
+      }
       this.busy = true;
       this.messages.error = '';
       this.providerManager
         .listDatabases()
         .then((databases) => {
           this.databases = databases;
-          this.providerManager.isLoggedIn().then((loggedIn) => {
-            this.loggedIn = loggedIn;
+          if (this.providerManager && this.providerManager.isLoggedIn) {
+            this.providerManager.isLoggedIn().then((loggedIn) => {
+              this.loggedIn = loggedIn;
+              this.busy = false;
+            });
+          } else {
             this.busy = false;
-          });
+          }
         })
         .catch((err) => {
           console.error(
             'Error while connecting to database backend for',
-            this.providerManager.title
+            this.providerManager ? this.providerManager.title : 'unknown provider'
           );
           this.messages.error = err.toString();
           this.databases = [];
