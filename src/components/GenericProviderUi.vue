@@ -98,15 +98,15 @@ export default {
 </template>
 
 <style lang="scss">
-// 使用CSS变量以支持深色模式
 .provider-card {
   background: var(--card-bg);
   border-radius: 16px;
   box-shadow: var(--shadow-md);
   padding: 20px;
-  margin-bottom: 16px;
+  margin-bottom: 0;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-light);
+  height: fit-content;
 
   &:hover {
     box-shadow: var(--shadow-lg);

@@ -177,149 +177,151 @@ export default {
 
 <template>
   <div class="advanced-settings">
-    <!-- 剪贴板过期时间设置 -->
-    <div class="settings-card">
-      <div class="settings-header">
-        <h4>{{ $t('advancedSettings.clipboardExpireTime.title') }}</h4>
-        <p>{{ $t('advancedSettings.clipboardExpireTime.description') }}</p>
+    <div class="settings-masonry">
+      <!-- 剪贴板过期时间设置 -->
+      <div class="settings-card">
+        <div class="settings-header">
+          <h4>{{ $t('advancedSettings.clipboardExpireTime.title') }}</h4>
+          <p>{{ $t('advancedSettings.clipboardExpireTime.description') }}</p>
+        </div>
+        <div class="settings-content">
+          <select v-model="expireTime" class="modern-select">
+            <option value="1">
+              {{ $t('advancedSettings.clipboardExpireTime.minutes1') }}
+            </option>
+            <option value="2">
+              {{ $t('advancedSettings.clipboardExpireTime.minutes2') }}
+            </option>
+            <option value="3">
+              {{ $t('advancedSettings.clipboardExpireTime.minutes3') }}
+            </option>
+            <option value="5">
+              {{ $t('advancedSettings.clipboardExpireTime.minutes5') }}
+            </option>
+            <option value="8">
+              {{ $t('advancedSettings.clipboardExpireTime.minutes8') }}
+            </option>
+          </select>
+        </div>
       </div>
-      <div class="settings-content">
-        <select v-model="expireTime" class="modern-select">
-          <option value="1">
-            {{ $t('advancedSettings.clipboardExpireTime.minutes1') }}
-          </option>
-          <option value="2">
-            {{ $t('advancedSettings.clipboardExpireTime.minutes2') }}
-          </option>
-          <option value="3">
-            {{ $t('advancedSettings.clipboardExpireTime.minutes3') }}
-          </option>
-          <option value="5">
-            {{ $t('advancedSettings.clipboardExpireTime.minutes5') }}
-          </option>
-          <option value="8">
-            {{ $t('advancedSettings.clipboardExpireTime.minutes8') }}
-          </option>
-        </select>
-      </div>
-    </div>
 
-    <!-- 热键导航设置 -->
-    <div class="settings-card">
-      <div class="settings-header">
-        <h4>{{ $t('advancedSettings.hotkeyNavigation.title') }}</h4>
-        <p>{{ $t('advancedSettings.hotkeyNavigation.description') }}</p>
+      <!-- 热键导航设置 -->
+      <div class="settings-card">
+        <div class="settings-header">
+          <h4>{{ $t('advancedSettings.hotkeyNavigation.title') }}</h4>
+          <p>{{ $t('advancedSettings.hotkeyNavigation.description') }}</p>
+        </div>
+        <div class="settings-content">
+          <label class="modern-switch">
+            <input v-model="hotkeyNavEnabled" type="checkbox" />
+            <span class="modern-switch-slider"></span>
+            <span class="modern-switch-label">{{
+              $t('advancedSettings.hotkeyNavigation.label')
+            }}</span>
+          </label>
+        </div>
       </div>
-      <div class="settings-content">
-        <label class="modern-switch">
-          <input v-model="hotkeyNavEnabled" type="checkbox" />
-          <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{
-            $t('advancedSettings.hotkeyNavigation.label')
-          }}</span>
-        </label>
-      </div>
-    </div>
 
-    <!-- 所有来源权限设置 -->
-    <div v-if="!isFirefox()" class="settings-card warning-card">
-      <div class="settings-header">
-        <h4>{{ $t('advancedSettings.allOriginPermission.title') }}</h4>
-        <p>
-          <strong class="warning-text">{{
-            $t('advancedSettings.allOriginPermission.warning')
-          }}</strong>
-          {{ $t('advancedSettings.allOriginPermission.description') }}
-        </p>
+      <!-- 所有来源权限设置 -->
+      <div v-if="!isFirefox()" class="settings-card warning-card">
+        <div class="settings-header">
+          <h4>{{ $t('advancedSettings.allOriginPermission.title') }}</h4>
+          <p>
+            <strong class="warning-text">{{
+              $t('advancedSettings.allOriginPermission.warning')
+            }}</strong>
+            {{ $t('advancedSettings.allOriginPermission.description') }}
+          </p>
+        </div>
+        <div class="settings-content">
+          <label class="modern-switch">
+            <input v-model="allOriginPermission" type="checkbox" @click="toggleOriginPermissions" />
+            <span class="modern-switch-slider"></span>
+            <span class="modern-switch-label">{{
+              $t('advancedSettings.allOriginPermission.label')
+            }}</span>
+          </label>
+        </div>
       </div>
-      <div class="settings-content">
-        <label class="modern-switch">
-          <input v-model="allOriginPermission" type="checkbox" @click="toggleOriginPermissions" />
-          <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{
-            $t('advancedSettings.allOriginPermission.label')
-          }}</span>
-        </label>
-      </div>
-    </div>
 
-    <!-- 通知设置 -->
-    <div class="settings-card">
-      <div class="settings-header">
-        <h4>{{ $t('advancedSettings.notifications.title') }}</h4>
-        <p>{{ $t('advancedSettings.notifications.description') }}</p>
+      <!-- 通知设置 -->
+      <div class="settings-card">
+        <div class="settings-header">
+          <h4>{{ $t('advancedSettings.notifications.title') }}</h4>
+          <p>{{ $t('advancedSettings.notifications.description') }}</p>
+        </div>
+        <div class="settings-content">
+          <label class="modern-switch">
+            <input v-model="notificationsEnabled" type="checkbox" value="expiration" />
+            <span class="modern-switch-slider"></span>
+            <span class="modern-switch-label">{{
+              $t('advancedSettings.notifications.passwordExpiration')
+            }}</span>
+          </label>
+          <label class="modern-switch">
+            <input v-model="notificationsEnabled" type="checkbox" value="clipboard" />
+            <span class="modern-switch-slider"></span>
+            <span class="modern-switch-label">{{
+              $t('advancedSettings.notifications.clipboardEvents')
+            }}</span>
+          </label>
+        </div>
       </div>
-      <div class="settings-content">
-        <label class="modern-switch">
-          <input v-model="notificationsEnabled" type="checkbox" value="expiration" />
-          <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{
-            $t('advancedSettings.notifications.passwordExpiration')
-          }}</span>
-        </label>
-        <label class="modern-switch">
-          <input v-model="notificationsEnabled" type="checkbox" value="clipboard" />
-          <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{
-            $t('advancedSettings.notifications.clipboardEvents')
-          }}</span>
-        </label>
-      </div>
-    </div>
 
-    <!-- 严格匹配设置 -->
-    <div class="settings-card">
-      <div class="settings-header">
-        <h4>{{ $t('advancedSettings.strictMatching.title') }}</h4>
-        <p>{{ $t('advancedSettings.strictMatching.description') }}</p>
+      <!-- 严格匹配设置 -->
+      <div class="settings-card">
+        <div class="settings-header">
+          <h4>{{ $t('advancedSettings.strictMatching.title') }}</h4>
+          <p>{{ $t('advancedSettings.strictMatching.description') }}</p>
+        </div>
+        <div class="settings-content">
+          <label class="modern-switch">
+            <input v-model="strictMatchEnabled" type="checkbox" />
+            <span class="modern-switch-slider"></span>
+            <span class="modern-switch-label">{{ $t('advancedSettings.strictMatching.label') }}</span>
+          </label>
+        </div>
       </div>
-      <div class="settings-content">
-        <label class="modern-switch">
-          <input v-model="strictMatchEnabled" type="checkbox" />
-          <span class="modern-switch-slider"></span>
-          <span class="modern-switch-label">{{ $t('advancedSettings.strictMatching.label') }}</span>
-        </label>
-      </div>
-    </div>
 
-    <!-- 主题设置 -->
-    <div class="settings-card">
-      <div class="settings-header">
-        <h4>{{ $t('theme.title') }}</h4>
-        <p>{{ $t('theme.description') }}</p>
+      <!-- 主题设置 -->
+      <div class="settings-card">
+        <div class="settings-header">
+          <h4>{{ $t('theme.title') }}</h4>
+          <p>{{ $t('theme.description') }}</p>
+        </div>
+        <div class="settings-content">
+          <div class="theme-segmented">
+            <button
+              v-for="theme in themes"
+              :key="theme.value"
+              class="segment-btn"
+              :class="{ active: selectedTheme === theme.value }"
+              @click="changeTheme(theme.value)"
+            >
+              <i class="fa" :class="theme.icon"></i>
+              <span>{{ theme.label }}</span>
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="settings-content">
-        <div class="theme-segmented">
-          <button
-            v-for="theme in themes"
-            :key="theme.value"
-            class="segment-btn"
-            :class="{ active: selectedTheme === theme.value }"
-            @click="changeTheme(theme.value)"
-          >
-            <i class="fa" :class="theme.icon"></i>
-            <span>{{ theme.label }}</span>
-          </button>
+
+      <!-- 语言选择 -->
+      <div class="settings-card">
+        <div class="settings-header">
+          <h4>{{ $t('advancedSettings.language.title') }}</h4>
+          <p>{{ $t('advancedSettings.language.description') }}</p>
+        </div>
+        <div class="settings-content">
+          <select v-model="selectedLocale" class="modern-select" @change="changeLocale">
+            <option value="en">{{ $t('advancedSettings.language.english') }}</option>
+            <option value="zh-CN">{{ $t('advancedSettings.language.chinese') }}</option>
+          </select>
         </div>
       </div>
     </div>
 
-    <!-- 语言选择 -->
-    <div class="settings-card">
-      <div class="settings-header">
-        <h4>{{ $t('advancedSettings.language.title') }}</h4>
-        <p>{{ $t('advancedSettings.language.description') }}</p>
-      </div>
-      <div class="settings-content">
-        <select v-model="selectedLocale" class="modern-select" @change="changeLocale">
-          <option value="en">{{ $t('advancedSettings.language.english') }}</option>
-          <option value="zh-CN">{{ $t('advancedSettings.language.chinese') }}</option>
-        </select>
-      </div>
-    </div>
-
     <!-- 存储数据 -->
-    <div class="settings-card">
+    <div class="settings-card stored-data-card">
       <div class="settings-header">
         <h4>{{ $t('advancedSettings.storedData.title') }}</h4>
         <p>{{ $t('advancedSettings.storedData.description') }}</p>
@@ -327,21 +329,23 @@ export default {
     </div>
 
     <!-- JSON数据展示 -->
-    <div v-for="blob in jsonState" :key="blob.k" class="settings-card data-card">
-      <div class="settings-content">
-        <p class="data-title">{{ blob.k }}</p>
-        <div class="between">
-          <div :id="blob.k" class="json" />
-          <button
-            v-if="blob.delete !== undefined"
-            class="modern-button danger small"
-            @click="
-              blob.delete.f(blob.delete.arg);
-              init();
-            "
-          >
-            {{ blob.delete.op }}
-          </button>
+    <div class="json-data-masonry">
+      <div v-for="blob in jsonState" :key="blob.k" class="settings-card data-card">
+        <div class="settings-content">
+          <p class="data-title">{{ blob.k }}</p>
+          <div class="between">
+            <div :id="blob.k" class="json" />
+            <button
+              v-if="blob.delete !== undefined"
+              class="modern-button danger small"
+              @click="
+                blob.delete.f(blob.delete.arg);
+                init();
+              "
+            >
+              {{ blob.delete.op }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -349,23 +353,62 @@ export default {
 </template>
 
 <style lang="scss">
-// 使用CSS变量而不是SCSS变量，以支持深色模式
 .advanced-settings {
-  padding: var(--space-4, 16px);
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
   background: var(--bg-primary);
-  min-height: 100vh;
+}
+
+.settings-masonry {
+  column-count: 3;
+  column-gap: 16px;
+  width: 100%;
+
+  @media (max-width: 1200px) {
+    column-count: 2;
+  }
+
+  @media (max-width: 768px) {
+    column-count: 1;
+  }
+}
+
+.json-data-masonry {
+  column-count: 3;
+  column-gap: 16px;
+  width: 100%;
+  margin-top: 16px;
+
+  @media (max-width: 1200px) {
+    column-count: 2;
+  }
+
+  @media (max-width: 768px) {
+    column-count: 1;
+  }
+}
+
+.stored-data-card {
+  margin-top: 16px;
+  break-inside: avoid;
+}
+
+.settings-masonry > *,
+.json-data-masonry > * {
+  break-inside: avoid;
+  margin-bottom: 16px;
 }
 
 .settings-card {
   background: var(--card-bg);
   border-radius: 16px;
   box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
+  margin-bottom: 0;
   overflow: hidden;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-light);
+  height: fit-content;
+  display: inline-block;
+  width: 100%;
 
   &:hover {
     box-shadow: var(--shadow-lg);

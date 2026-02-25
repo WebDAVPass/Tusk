@@ -65,6 +65,7 @@ function KeepassService(keepassHeader, settings, passwordFileStoreRegistry, keep
 
   my.getDecryptedData = function (bufferPromise, masterKey) {
     var majorVersion;
+    var customIconsMap = {};
     return bufferPromise
       .then(function (buf) {
         var h = keepassHeader.readHeader(buf);
@@ -74,7 +75,16 @@ function KeepassService(keepassHeader, settings, passwordFileStoreRegistry, keep
           // KDBX - use kdbxweb library
           var kdbxCreds = jsonCredentialsToKdbx(masterKey);
           return kdbxweb.Kdbx.load(buf, kdbxCreds).then((db) => {
-            var entries = parseKdbxDb(db.groups);
+            // 提取自定义图标
+            if (db.meta && db.meta.customIcons) {
+              db.meta.customIcons.forEach((icon, uuid) => {
+                customIconsMap[uuid] = {
+                  data: icon.data ? arrayBufferToBase64(icon.data) : null,
+                  name: icon.name || null,
+                };
+              });
+            }
+            var entries = parseKdbxDb(db.groups, customIconsMap);
             majorVersion = db.header.versionMajor;
             return processReferences(entries, majorVersion);
           });
@@ -87,9 +97,19 @@ function KeepassService(keepassHeader, settings, passwordFileStoreRegistry, keep
         return {
           entries: entries,
           version: majorVersion,
+          customIcons: customIconsMap,
         };
       });
   };
+
+  function arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    for (var i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return 'data:image/png;base64,' + btoa(binary);
+  }
 
   my.rankEntries = (entries, siteUrl, title, siteTokens) => {
     entries.forEach(function (entry) {
@@ -170,13 +190,13 @@ function KeepassService(keepassHeader, settings, passwordFileStoreRegistry, keep
   /*
    * Takes a kdbxweb group object and transforms it into a list of entries.
    **/
-  function parseKdbxDb(groups) {
+  function parseKdbxDb(groups, customIconsMap) {
     var results = [];
     for (var i = 0; i < groups.length; i++) {
       var group = groups[i];
       if (group.groups.length > 0) {
         // recursive case for subgroups.
-        results = results.concat(parseKdbxDb(group.groups));
+        results = results.concat(parseKdbxDb(group.groups, customIconsMap));
       }
       for (var j = 0; j < group.entries.length; j++) {
         var db_entry = group.entries[j];
@@ -196,7 +216,17 @@ function KeepassService(keepassHeader, settings, passwordFileStoreRegistry, keep
           if (db_entry.uuid.empty == false)
             entry.id = convertArrayToUUID(Base64.decode(db_entry.uuid.id));
         }
-        if (db_entry.icon) entry.iconId = db_entry.icon;
+        // 处理图标
+        if (db_entry.customIcon && customIconsMap[db_entry.customIcon.id]) {
+          // 优先使用自定义图标
+          entry.icon = customIconsMap[db_entry.customIcon.id].data;
+          entry.iconName = customIconsMap[db_entry.customIcon.id].name;
+          entry.isCustomIcon = true;
+        } else if (db_entry.icon !== undefined) {
+          // 使用标准图标
+          entry.iconId = db_entry.icon;
+          entry.isCustomIcon = false;
+        }
         if (db_entry.tags.length > 0) {
           //verify
           var tagstring = '';

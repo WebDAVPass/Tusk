@@ -1,6 +1,7 @@
 'use strict';
 import * as Base64 from 'base64-arraybuffer';
 import { ChromePromiseApi } from '@/lib/chrome-api-promise.js';
+import { oauthConfig } from './oauthConfig.js';
 const chromePromise = ChromePromiseApi();
 
 function OauthManager(settings, oauth) {
@@ -194,31 +195,29 @@ function OauthManager(settings, oauth) {
 
     let authfunction = (is_interactive) => {
       return new Promise(function (resolve, reject) {
-        chromePromise.runtime.getManifest().then((manifest) => {
-          //random state, protects against CSRF
-          var randomState = Base64.encode(crypto.getRandomValues(new Uint8Array(16)));
-          var authUrl =
-            oauth.authUrl +
-            '&client_id=' +
-            manifest.static_data[oauth.accessTokenType].client_id +
-            '&state=' +
-            encodeURIComponent(randomState) +
-            '&redirect_uri=' +
-            encodeURIComponent(chrome.identity.getRedirectURL(oauth.accessTokenType));
-          console.info('Sending request for AUTH to', oauth.authUrl);
-          chromePromise.identity
-            .launchWebAuthFlow({
-              url: authUrl,
-              interactive: is_interactive,
-            })
-            .then((redirect_url) => {
-              oauth.handleAuthRedirectURI(redirect_url, randomState, resolve, reject);
-            })
-            .catch(function (err) {
-              console.error('Error from webauthflow for', oauth.accessTokenType, err);
-              reject(err);
-            });
-        });
+        //random state, protects against CSRF
+        var randomState = Base64.encode(crypto.getRandomValues(new Uint8Array(16)));
+        var authUrl =
+          oauth.authUrl +
+          '&client_id=' +
+          oauthConfig[oauth.accessTokenType].client_id +
+          '&state=' +
+          encodeURIComponent(randomState) +
+          '&redirect_uri=' +
+          encodeURIComponent(chrome.identity.getRedirectURL(oauth.accessTokenType));
+        console.info('Sending request for AUTH to', oauth.authUrl);
+        chromePromise.identity
+          .launchWebAuthFlow({
+            url: authUrl,
+            interactive: is_interactive,
+          })
+          .then((redirect_url) => {
+            oauth.handleAuthRedirectURI(redirect_url, randomState, resolve, reject);
+          })
+          .catch(function (err) {
+            console.error('Error from webauthflow for', oauth.accessTokenType, err);
+            reject(err);
+          });
       });
     };
 

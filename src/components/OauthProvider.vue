@@ -16,6 +16,7 @@ export default {
   components: {
     GenericProviderUi,
   },
+  emits: ['login', 'logout'],
   props: {
     providerManager: Object,
     settings: Object,
@@ -35,7 +36,6 @@ export default {
   },
   methods: {
     populate() {
-      // TODO: deal with the race condition here....
       if (!this.providerManager) {
         this.busy = false;
         return;
@@ -67,16 +67,13 @@ export default {
         });
     },
     toggleLogin(event) {
-      //v-bind:id="'toggleButton'+providerManager.key"j
-      // this.providerManager.logout()
-      // this.settings.disableDatabaseProvider(this.providerManager)
       if (!this.busy) {
         if (this.loggedIn) {
           this.providerManager
             .logout()
             .then((nil) => {
-              // if logout works, attempt to unset the currentDatabaseChoice.
               this.settings.disableDatabaseProvider(this.providerManager);
+              this.$emit('logout');
               this.populate();
             })
             .catch((err) => {
@@ -87,6 +84,7 @@ export default {
           this.providerManager
             .login()
             .then((nil) => {
+              this.$emit('login');
               this.populate();
             })
             .catch((err) => {
@@ -95,7 +93,6 @@ export default {
             });
         }
       } else {
-        // wait for state to settle...
         console.error('Wait for toggle state to settle before changing enable/disable');
       }
     },
@@ -104,7 +101,7 @@ export default {
 </script>
 
 <template>
-  <div class="box-bar roomy database-manager">
+  <div class="box-bar roomy database-manager oauth-provider-card">
     <generic-provider-ui
       :busy="busy"
       :databases="databases"
@@ -121,6 +118,13 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../styles/settings.scss';
+
+.oauth-provider-card {
+  margin-bottom: 0;
+  height: fit-content;
+  display: inline-block;
+  width: 100%;
+}
 </style>

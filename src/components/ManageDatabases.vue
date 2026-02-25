@@ -38,7 +38,32 @@ export default {
         },
       },
       tabRouter: new VirtualRouter(),
+      providerStates: {},
     };
+  },
+  computed: {
+    sortedProviders() {
+      const providers = [
+        { key: 'sample', manager: this.sampleManager, component: 'oauth-provider' },
+        { key: 'dropbox', manager: this.dropboxFileManager, component: 'oauth-provider' },
+        {
+          key: 'gdrive',
+          manager: this.googleDriveManager,
+          component: 'oauth-provider',
+          hasSlot: true,
+        },
+        { key: 'onedrive', manager: this.onedriveManager, component: 'oauth-provider' },
+        { key: 'shared-url', manager: this.sharedUrlManager, component: 'shared-link-provider' },
+        { key: 'webdav', manager: this.webdavManager, component: 'webdav-provider' },
+        { key: 'local', manager: this.localFileManager, component: 'local-password-file-provider' },
+      ];
+
+      return providers.sort((a, b) => {
+        const aLoggedIn = this.providerStates[a.key] || false;
+        const bLoggedIn = this.providerStates[b.key] || false;
+        return bLoggedIn - aLoggedIn;
+      });
+    },
   },
   mounted() {
     this.tabRouter.registerRoutes([
@@ -53,14 +78,45 @@ export default {
       {
         route: '/',
         var: this.show.none,
-      }, // Use this to hide others, since no id=none element exists.
+      },
     ]);
+    this.checkAllProvidersStatus();
+  },
+  methods: {
+    async checkAllProvidersStatus() {
+      const managers = [
+        { key: 'sample', manager: this.sampleManager },
+        { key: 'dropbox', manager: this.dropboxFileManager },
+        { key: 'gdrive', manager: this.googleDriveManager },
+        { key: 'onedrive', manager: this.onedriveManager },
+        { key: 'shared-url', manager: this.sharedUrlManager },
+        { key: 'webdav', manager: this.webdavManager },
+        { key: 'local', manager: this.localFileManager },
+      ];
+
+      for (const { key, manager } of managers) {
+        if (manager && manager.isLoggedIn) {
+          try {
+            const loggedIn = await manager.isLoggedIn();
+            this.providerStates[key] = loggedIn;
+          } catch {
+            this.providerStates[key] = false;
+          }
+        }
+      }
+    },
+    onProviderLogin(key) {
+      this.providerStates[key] = true;
+    },
+    onProviderLogout(key) {
+      this.providerStates[key] = false;
+    },
   },
 };
 </script>
 
 <template>
-  <div>
+  <div class="manage-databases-container">
     <div class="box-bar about roomy">
       <p>
         {{ $t('manageDatabases.description') }}
@@ -81,19 +137,73 @@ export default {
         {{ $t('manageDatabases.newUserText') }}
       </p>
     </div>
-    <oauth-provider :provider-manager="sampleManager" :settings="settings" />
-    <oauth-provider :provider-manager="dropboxFileManager" :settings="settings" />
-    <oauth-provider :provider-manager="googleDriveManager" :settings="settings">
-      <google-picker v-bind="{ googleDriveManager, settings }" />
-    </oauth-provider>
-    <oauth-provider :provider-manager="onedriveManager" :settings="settings" />
-    <!-- <oauth-provider :provider-manager="pCloudFileManager" :settings="settings"></oauth-provider> -->
-    <shared-link-provider :provider-manager="sharedUrlManager" :settings="settings" />
-    <webdav-provider :provider-manager="webdavManager" :settings="settings" />
-    <local-password-file-provider :provider-manager="localFileManager" :settings="settings" />
+    <div class="providers-masonry">
+      <template v-for="provider in sortedProviders" :key="provider.key">
+        <oauth-provider
+          v-if="provider.component === 'oauth-provider' && !provider.hasSlot"
+          :provider-manager="provider.manager"
+          :settings="settings"
+          @login="onProviderLogin(provider.key)"
+          @logout="onProviderLogout(provider.key)"
+        />
+        <oauth-provider
+          v-else-if="provider.component === 'oauth-provider' && provider.hasSlot"
+          :provider-manager="provider.manager"
+          :settings="settings"
+          @login="onProviderLogin(provider.key)"
+          @logout="onProviderLogout(provider.key)"
+        >
+          <google-picker v-if="provider.key === 'gdrive'" v-bind="{ googleDriveManager, settings }" />
+        </oauth-provider>
+        <shared-link-provider
+          v-else-if="provider.component === 'shared-link-provider'"
+          :provider-manager="provider.manager"
+          :settings="settings"
+          @login="onProviderLogin(provider.key)"
+          @logout="onProviderLogout(provider.key)"
+        />
+        <webdav-provider
+          v-else-if="provider.component === 'webdav-provider'"
+          :provider-manager="provider.manager"
+          :settings="settings"
+          @login="onProviderLogin(provider.key)"
+          @logout="onProviderLogout(provider.key)"
+        />
+        <local-password-file-provider
+          v-else-if="provider.component === 'local-password-file-provider'"
+          :provider-manager="provider.manager"
+          :settings="settings"
+          @login="onProviderLogin(provider.key)"
+          @logout="onProviderLogout(provider.key)"
+        />
+      </template>
+    </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../styles/settings.scss';
+
+.manage-databases-container {
+  width: 100%;
+}
+
+.providers-masonry {
+  column-count: 3;
+  column-gap: 16px;
+  width: 100%;
+
+  @media (max-width: 1200px) {
+    column-count: 2;
+  }
+
+  @media (max-width: 768px) {
+    column-count: 1;
+  }
+}
+
+.providers-masonry > * {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
 </style>

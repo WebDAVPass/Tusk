@@ -1,6 +1,6 @@
 <script>
 import { ChromePromiseApi } from '@/lib/chrome-api-promise.js';
-import { manifest } from 'webextension-polyfill';
+import { oauthConfig } from '../../services/oauthConfig.js';
 const chromePromise = ChromePromiseApi();
 
 export default {
@@ -29,19 +29,17 @@ export default {
   methods: {
     showPicker() {
       this.pickerOpen = true;
-      chromePromise.runtime.getManifest().then((manifest) => {
-        const APP_ID = manifest.static_data[this.googleDriveManager.key].client_id;
-        this.googleDriveManager.getToken().then((accessToken) => {
-          const iframe = document.getElementById('pickerFrame').contentWindow;
-          iframe.postMessage(
-            {
-              m: 'showPicker',
-              accessToken: accessToken,
-              appId: APP_ID,
-            },
-            '*'
-          );
-        });
+      const APP_ID = oauthConfig[this.googleDriveManager.key].client_id;
+      this.googleDriveManager.getToken().then((accessToken) => {
+        const iframe = document.getElementById('pickerFrame').contentWindow;
+        iframe.postMessage(
+          {
+            m: 'showPicker',
+            accessToken: accessToken,
+            appId: APP_ID,
+          },
+          '*'
+        );
       });
     },
   },
