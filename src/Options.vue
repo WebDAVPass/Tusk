@@ -205,7 +205,8 @@ body {
 
 #contentbox {
   margin: 0px auto;
-  width: $options-width;
+  max-width: 1400px;
+  width: calc(100% - 40px);
   background-color: var(--bg-primary);
   padding: 20px 0;
 }

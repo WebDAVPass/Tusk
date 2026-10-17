@@ -12,6 +12,7 @@ export default {
   components: {
     GenericProviderUi,
   },
+  emits: ['login', 'logout'],
   props: {
     providerManager: Object,
     settings: Object,
@@ -42,10 +43,12 @@ export default {
         this.settings.disableDatabaseProvider(this.providerManager);
         this.providerManager.logout().then(() => {
           this.loggedIn = false;
+          this.$emit('logout');
         });
       } else {
         this.providerManager.login().then(() => {
           this.loggedIn = true;
+          this.$emit('login');
         });
       }
     },
@@ -121,7 +124,7 @@ export default {
 </script>
 
 <template>
-  <div class="box-bar roomy database-manager">
+  <div class="box-bar roomy database-manager shared-link-provider-card">
     <generic-provider-ui
       :busy="busy"
       :databases="links"
@@ -166,22 +169,34 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/settings.scss';
+
+.shared-link-provider-card {
+  margin-bottom: 0;
+  height: fit-content;
+  display: inline-block;
+  width: 100%;
+}
+
 .examples {
-  font-size: 13px;
+  font-size: 12px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+
+  li {
+    margin-bottom: 6px;
+  }
 }
 .url-form {
   margin-top: 15px;
   &.shared-link-box {
     display: flex;
-    justify-content: space-between;
-    align-content: stretch;
+    flex-direction: column;
+    gap: 8px;
+
     input {
-      width: 25%;
-      margin-right: 8px;
-      margin-bottom: 5px;
-    }
-    input#shared-link {
-      width: 48%;
+      width: 100%;
+      margin-bottom: 0;
     }
   }
 }

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { ChromePromiseApi } from '@/lib/chrome-api-promise.js';
 import { OauthManager } from '$services/oauthManager.js';
+import { oauthConfig } from './oauthConfig.js';
 
 const chromePromise = ChromePromiseApi();
 
@@ -101,12 +102,10 @@ function OneDriveFileManager(settings) {
   };
 
   oauth.revokeAuth = function () {
-    return chromePromise.runtime.getManifest().then((manifest) => {
-      let url =
-        'https://login.live.com/oauth20_logout.srf?client_id=' +
-        manifest.static_data.onedrive.client_id;
-      return axios.get(url);
-    });
+    let url =
+      'https://login.live.com/oauth20_logout.srf?client_id=' +
+      oauthConfig.onedrive.client_id;
+    return axios.get(url);
   };
 
   oauth.handleAuthRedirectURI = function (redirect_url, randomState, resolve, reject) {

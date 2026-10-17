@@ -11,6 +11,7 @@ export default {
   components: {
     GenericProviderUi,
   },
+  emits: ['login', 'logout'],
   props: {
     providerManager: Object,
     settings: Object,
@@ -45,10 +46,12 @@ export default {
         this.settings.disableDatabaseProvider(this.providerManager);
         this.providerManager.logout().then(() => {
           this.loggedIn = false;
+          this.$emit('logout');
         });
       } else {
         this.providerManager.login().then(() => {
           this.loggedIn = true;
+          this.$emit('login');
         });
         e.preventDefault();
       }
@@ -114,7 +117,7 @@ export default {
 </script>
 
 <template>
-  <div class="box-bar roomy database-manager">
+  <div class="box-bar roomy database-manager local-provider-card">
     <generic-provider-ui
       :busy="busy"
       :databases="databases"
@@ -151,4 +154,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/settings.scss';
+
+.local-provider-card {
+  margin-bottom: 0;
+  height: fit-content;
+  display: inline-block;
+  width: 100%;
+}
 </style>

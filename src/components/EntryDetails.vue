@@ -1,6 +1,7 @@
 <script>
 import { Otp as OTP } from '@/lib/otp.js';
 import { parseUrl } from '@/lib/utils.js';
+import { getIconClass } from '@/lib/keepassIcons.js';
 import GoBack from '@/components/GoBack.vue';
 
 export default {
@@ -23,6 +24,18 @@ export default {
       otp_value: '',
       otp_width: 0,
     };
+  },
+  computed: {
+    entryIcon() {
+      if (this.entry) {
+        if (this.entry.isCustomIcon && this.entry.icon) {
+          return { type: 'custom', data: this.entry.icon };
+        } else if (this.entry.iconId !== undefined) {
+          return { type: 'standard', class: getIconClass(this.entry.iconId) };
+        }
+      }
+      return { type: 'default', class: 'key' };
+    },
   },
   beforeUnmount() {
     clearInterval(this.otp_loop);
@@ -119,6 +132,21 @@ export default {
 <template>
   <div>
     <go-back :message="$t('entryDetails.backToList')" />
+    <div v-if="entry" class="entry-header">
+      <div class="entry-icon-large">
+        <img
+          v-if="entryIcon.type === 'custom'"
+          :src="entryIcon.data"
+          class="custom-icon"
+          :alt="entry.iconName || 'icon'"
+        />
+        <i v-else :class="'fa fa-' + entryIcon.class" class="standard-icon" />
+      </div>
+      <div class="entry-title">
+        <h3>{{ entry.title || entry.url }}</h3>
+        <span class="entry-group" v-if="entry.groupName">{{ entry.groupName }}</span>
+      </div>
+    </div>
     <div class="box-bar nopad all-attributes">
       <div v-if="otp" class="attribute-box">
         <span class="attribute-title">{{ $t('entryDetails.oneTimePassword') }}</span>
@@ -194,6 +222,56 @@ export default {
 .all-attributes {
   max-height: 400px;
   overflow-y: auto;
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px $wall-padding;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  margin-bottom: 8px;
+
+  .entry-icon-large {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+
+    .custom-icon {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .standard-icon {
+      font-size: 28px;
+      color: var(--primary-color);
+    }
+  }
+
+  .entry-title {
+    flex: 1;
+    min-width: 0;
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    .entry-group {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+  }
 }
 
 .attribute-box {

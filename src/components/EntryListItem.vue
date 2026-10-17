@@ -1,5 +1,6 @@
 <script>
 import { parseUrl } from '@/lib/utils.js';
+import { getIconClass } from '@/lib/keepassIcons.js';
 export default {
   props: {
     entry: Object,
@@ -9,6 +10,14 @@ export default {
     header: function () {
       if (this.entry.title.length > 0) return this.entry.title;
       return this.entry.url;
+    },
+    entryIcon() {
+      if (this.entry.isCustomIcon && this.entry.icon) {
+        return { type: 'custom', data: this.entry.icon };
+      } else if (this.entry.iconId !== undefined) {
+        return { type: 'standard', class: getIconClass(this.entry.iconId) };
+      }
+      return { type: 'default', class: 'key' };
     },
   },
   watch: {
@@ -46,6 +55,15 @@ export default {
     :class="{ active: entry.view_is_active }"
     @click="details"
   >
+    <div class="entry-icon">
+      <img
+        v-if="entryIcon.type === 'custom'"
+        :src="entryIcon.data"
+        class="custom-icon"
+        :alt="entry.iconName || 'icon'"
+      />
+      <i v-else :class="'fa fa-' + entryIcon.class" class="standard-icon" />
+    </div>
     <div class="text-info" :class="{ strike: entry.is_expired }">
       <span class="header">{{ header }}</span>
       <br />
@@ -76,6 +94,29 @@ export default {
   border-bottom: 1px solid $light-gray;
   background-color: var(--bg-primary);
   display: flex;
+  align-items: center;
+  gap: 12px;
+  .entry-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .custom-icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+    .standard-icon {
+      font-size: 18px;
+      color: var(--primary-color);
+    }
+  }
+  .text-info {
+    flex: 1;
+    min-width: 0;
+  }
   .header {
     font-size: 16px;
   }
